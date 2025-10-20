@@ -25,6 +25,7 @@ namespace DucatiExcelApi.Controllers
         
 
         [HttpGet("efn_ARTICOLI")]
+        [AllowAnonymous]
         public IActionResult efn_ARTICOLI([FromQuery] string Distinta)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
