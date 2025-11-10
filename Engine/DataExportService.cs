@@ -1,7 +1,10 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using DucatiMeccaExcelApi.Utility;
+using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Formatting = Newtonsoft.Json.Formatting;
 
@@ -19,9 +22,19 @@ namespace DucatiMeccaExcelApi.Engine
             _stopwatch = new Stopwatch();
         }
 
-        
+        public DataTable Execute(string programName, ProgramType programType, List<SqlParameter> parameters)
+        {
+            return programType == ProgramType.StoredProcedure ?
+                EseguiStoredProcedure(programName, parameters) :
+                ExecuteFunction(programName, parameters);
+        }
 
-        public DataTable ExecuteFunction(string functionName, List<SqlParameter> parameters)
+        private DataTable EseguiStoredProcedure(string programName, List<SqlParameter> parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        private DataTable ExecuteFunction(string functionName, List<SqlParameter> parameters)
         {
             _stopwatch = new Stopwatch();
             _stopwatch.Start();
@@ -30,31 +43,46 @@ namespace DucatiMeccaExcelApi.Engine
             using (SqlCommand cmd = new SqlCommand())
             {
                 cmd.Connection = conn;
-                Console.WriteLine($"Inizio ExecuteReader...{DateTime.Now}");
-                
+                Console.WriteLine($"Inizio ExecuteReader... {DateTime.Now}");
+
                 string paramList = string.Join(", ", parameters.Select(p => p.ParameterName));
-                cmd.CommandText = $"SELECT top(10) * FROM {functionName}({paramList})";
+                cmd.CommandText = $"SELECT * FROM {functionName}({paramList})";
                 cmd.CommandTimeout = 0;
 
                 if (parameters != null && parameters.Count > 0)
                     cmd.Parameters.AddRange(parameters.ToArray());
 
+                // --- Esegui la query e riempi la DataTable originale ---
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
+                // --- Crea una nuova DataTable con tutte le colonne come stringhe ---
+                DataTable dtString = new DataTable(functionName);
+                foreach (DataColumn col in dt.Columns)
+                {
+                    dtString.Columns.Add(col.ColumnName, typeof(string));
+                }
+
+                // --- Copia tutti i dati convertendoli in stringhe ---
+                foreach (DataRow row in dt.Rows)
+                {
+                    DataRow newRow = dtString.NewRow();
+                    foreach (DataColumn col in dt.Columns)
+                    {
+                        newRow[col.ColumnName] = row[col]?.ToString();
+                    }
+                    dtString.Rows.Add(newRow);
+                }
+
                 _stopwatch.Stop();
                 TimeSpan ts = _stopwatch.Elapsed;
+                Console.WriteLine($"Fine ExecuteReader - Tempo trascorso: {ts}");
 
-                string elapsedTime = string.Format("{0:00}:{1:00}:{2:00}.{3:000}",
-                    ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds);
-                Console.WriteLine($"Fine ExecuteReader - Tempo trascorso: {ts} ");
-
-                dt.TableName = functionName;
-
-                return dt;
+                return dtString;
             }
         }
+
 
         // 🔹 Nuovo metodo: STREAMING JSON
         public async Task ExecuteFunctionStream(HttpResponse response, string functionName, List<SqlParameter> parameters)
@@ -111,31 +139,6 @@ namespace DucatiMeccaExcelApi.Engine
 
             ts = _stopwatch.Elapsed;
             Console.WriteLine($"Fine StreamWriter - Tempo trascorso: {ts:hh\\:mm\\:ss\\.fff}");
-        }
-
-
-        public string EseguiStoredProcedureJson(string storedName, List<SqlParameter> parameters)
-        {
-            SqlConnection conn = new SqlConnection(_connectionString);
-
-            using (SqlCommand cmd = new SqlCommand(storedName, conn))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandTimeout = 0; // Nessun timeout durante l’esecuzione
-
-                // Aggiungo eventuali parametri
-                if (parameters != null && parameters.Count > 0)
-                    cmd.Parameters.AddRange(parameters.ToArray());
-
-                // Riempio il DataTable
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-
-                // Serializzo in JSON
-                string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
-                return json;
-            }
         }
     }
 }

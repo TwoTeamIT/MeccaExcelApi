@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DucatiExcelApi
@@ -46,6 +47,11 @@ namespace DucatiExcelApi
                 app.UseSwaggerUI();
             }
 
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.GetTempPath()),
+                RequestPath = "/temp"
+            });
 
             app.UseHttpsRedirection();
 
