@@ -1,4 +1,4 @@
-﻿
+﻿using DucatiMeccaExcelApi.Utility;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
@@ -10,6 +10,8 @@ namespace DucatiExcelApi
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.Configure<EndPointCacheConfig>(builder.Configuration.GetSection("EndPointCacheConfig"));
 
             // Add services to the container.
 

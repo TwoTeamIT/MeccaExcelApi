@@ -1,15 +1,13 @@
-﻿using Azure;
-using DucatiMeccaExcelApi.Engine;
+﻿using DucatiMeccaExcelApi.Engine;
 using DucatiMeccaExcelApi.Utility;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
 using System.Data;
 using System.Diagnostics;
 using System.Text;
-using System.Xml;
 using Formatting = Newtonsoft.Json.Formatting;
 
 namespace DucatiExcelApi.Controllers
@@ -19,53 +17,318 @@ namespace DucatiExcelApi.Controllers
     //[Authorize]
     public class Functions : ControllerBase
     {
-        private readonly DataExportService _dataExportService;
-        private readonly ILogger<Functions> _logger;
 
-        private readonly string folderPath = @"C:\temp";
-        private readonly double cacheDurationMinutes = 5;
+        private readonly ILogger<Functions> _logger;
+        private DataExportEngine _dataExportEngine;
 
         // Cache in memoria: per ogni chiave (funzione + utente + parametri)
         // memorizza il percorso del file XML e la sua data di scadenza
-        private static readonly Dictionary<string, (string FilePath, DateTime Expiration)> _cache
+        private static Dictionary<string, (string FilePath, DateTime Expiration)> _cache
             = new Dictionary<string, (string FilePath, DateTime Expiration)>();
 
         // Contiene i task in corso, per evitare che due chiamate simultanee allo stesso endpoint
         // eseguano la query al DB due volte (una sola la genera, le altre aspettano)
-        private static readonly ConcurrentDictionary<string, Lazy<Task<string>>> _generationTasks
+        private static ConcurrentDictionary<string, Lazy<Task<string>>> _generationTasks
             = new ConcurrentDictionary<string, Lazy<Task<string>>>();
 
-        public Functions(IConfiguration configuration, ILogger<Functions> logger)
+        public Functions(IConfiguration configuration, ILogger<Functions> logger, IOptions<EndPointCacheConfig> options)
         {
             var connStr = configuration.GetConnectionString("DefaultConnection");
 
             if (string.IsNullOrEmpty(connStr))
                 throw new InvalidOperationException("La stringa di connessione 'DefaultConnection' non è stata trovata o è nulla.");
 
-            _dataExportService = new DataExportService(connStr);
             _logger = logger;
+
+            _dataExportEngine = new DataExportEngine(connStr, logger, options);
         }
 
-        [HttpGet("efn_ARTICOLI_XML")]
-        public IActionResult GetEfn_ARTICOLI_XML([FromQuery] string Distinta)
-        {
-            var parameters = new List<SqlParameter> { new SqlParameter("@Distinta", Distinta) };
-            var stopwatch = Stopwatch.StartNew();
-            return GetXmlStream("efn_ARTICOLI", ProgramType.Function, parameters, stopwatch);
-        }
+        //[HttpGet("efn_ARTICOLI_XML")]
+        //public IActionResult GetEfn_ARTICOLI_XML([FromQuery] string Distinta)
+        //{
+        //    var parameters = new List<SqlParameter> { new SqlParameter("@Distinta", Distinta) };
+        //    var stopwatch = Stopwatch.StartNew();
+        //    return GetXmlStream("efn_ARTICOLI", ProgramType.Function, parameters, stopwatch);
+        //}
 
         [HttpGet("{mode}/efn_ARTICOLI")]
         public IActionResult GetEfn_ARTICOLI([FromRoute] string mode, [FromQuery] string Distinta)
         {
+            var parameters = new List<SqlParameter> { new SqlParameter("@Distinta", Distinta) };            
+            return GetExportStream(mode, "efn_ARTICOLI", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_ARTICOLI_DBEXP")]
+        public IActionResult GetEfn_ARTICOLI_DBEXP([FromRoute] string mode, [FromQuery] string Fileoni)
+        {
+            var parameters = new List<SqlParameter> { new SqlParameter("@Fileoni", Fileoni) };
+            return GetExportStream(mode, "efn_ARTICOLI_DBEXP", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_ARTICOLI_NEW")]
+        public IActionResult GetEfn_ARTICOLI_NEW([FromRoute] string mode, [FromQuery] string Parte, [FromQuery] string Tipo)
+        {
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Parte", Parte),
+                new SqlParameter("@Tipo", Tipo)
+            };
+            return GetExportStream(mode, "efn_ARTICOLI_NEW", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_DBEXP")]
+        public IActionResult GetEfn_DBEXP([FromRoute] string mode, [FromQuery]string Distinta)
+        {
             var parameters = new List<SqlParameter> { new SqlParameter("@Distinta", Distinta) };
-            var stopwatch = Stopwatch.StartNew();
-            return GetExportStream(mode, "efn_ARTICOLI", ProgramType.Function, parameters, stopwatch);
+            return GetExportStream(mode, "efn_DBEXP", ProgramType.Function, parameters);
+        }
+        [HttpGet("{mode}/efn_FDMxMatricola")]
+        public IActionResult GetEfn_FDMxMatricola([FromRoute] string mode, [FromQuery] string Descrizione)
+        {             
+            var parameters = new List<SqlParameter> { new SqlParameter("@Descrizione", Descrizione) };
+            return GetExportStream(mode, "efn_FDMxMatricola", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_FILEONE")]
+        public IActionResult GetEfn_FILEONE([FromRoute] string mode, [FromQuery] string Distinta)
+        {
+            var parameters = new List<SqlParameter> { new SqlParameter("@Distinta", Distinta) };
+            return GetExportStream(mode, "efn_FILEONE", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_FILEONE_EXP")]
+        public IActionResult GetEfn_FILEONE_EXP([FromRoute] string mode, [FromQuery] string Fileone, [FromQuery] string Divisione)
+        {
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Fileone", Fileone),
+                new SqlParameter("@Divisione", Divisione)
+            };
+            return GetExportStream(mode, "efn_FILEONE_EXP", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_FILEONE_EXP1")]
+        public IActionResult GetEfn_FILEONE_EXP1([FromRoute] string mode, [FromQuery] string Fileone, [FromQuery] string Divisione, [FromQuery] string Mag)
+        {
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Fileone", Fileone),
+                new SqlParameter("@Divisione", Divisione),
+                new SqlParameter("@Mag", Mag)
+            };
+            return GetExportStream(mode, "efn_FILEONE_EXP1", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_FILEONI_CARRELLI")]
+        public IActionResult GetEfn_FILEONI_CARRELLI([FromRoute] string mode, [FromQuery] string FileoneRIF, [FromQuery] string FileoneCOMP, [FromQuery] string DataRif)
+        {   var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@FileoneRIF", FileoneRIF),
+                new SqlParameter("@FileoneCOMP", FileoneCOMP),
+                new SqlParameter("@DataRif", DataRif)
+            };
+            return GetExportStream(mode, "efn_FILEONI_CARRELLI", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_FILEONI_COMP")]
+        public IActionResult GetEfn_FILEONI_COMP([FromRoute] string mode, [FromQuery] string FileoneRIF, [FromQuery] string FileoneCOMP, [FromQuery] string Ordinamento)
+        {
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@FileoneRIF", FileoneRIF),
+                new SqlParameter("@FileoneCOMP", FileoneCOMP),
+                new SqlParameter("@Ordinamento", Ordinamento)
+            };
+            return GetExportStream(mode, "efn_FILEONI_COMP", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_FOGLIO_MONTAGGIO")]
+        public IActionResult GetEfn_FOGLIO_MONTAGGIO([FromRoute] string mode, [FromQuery] int Ultimo)
+        {
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Ultimo", Ultimo)
+            };
+            return GetExportStream(mode, "efn_FOGLIO_MONTAGGIO", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_FOGLIO_SMONTAGGIO")]
+        public IActionResult GetEfn_FOGLIO_SMONTAGGIO([FromRoute] string mode, [FromQuery] string Codice, [FromQuery] string Revisione, [FromQuery] string Progressivo)
+        {
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Codice", Codice),
+                new SqlParameter("@Revisione", Revisione),
+                new SqlParameter("@Progressivo", Progressivo)
+            };
+            return GetExportStream(mode, "efn_FOGLIO_SMONTAGGIO", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_FOGLIO_SMONTAGGIO_2")]
+        public IActionResult GetEfn_FOGLIO_SMONTAGGIO_2([FromRoute] string mode, [FromQuery] string Codice, [FromQuery] string Revisione)
+        {
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Codice", Codice),
+                new SqlParameter("@Revisione", Revisione)
+            };
+            return GetExportStream(mode, "efn_FOGLIO_SMONTAGGIO_2", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_FOGLIO_SMONTAGGIO_3")]
+        public IActionResult GetEfn_FOGLIO_SMONTAGGIO_3([FromRoute] string mode)
+        {
+            var parameters = new List<SqlParameter>();
+            return GetExportStream(mode, "efn_FOGLIO_SMONTAGGIO_3", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_GestioneID")]
+        public IActionResult GetEfn_GestioneID([FromRoute] string mode, [FromQuery] string Codice, [FromQuery] int Id, [FromQuery] string Montati, [FromQuery] string Esito)
+        {
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Codice", Codice),
+                new SqlParameter("@Id", Id),
+                new SqlParameter("@Montati", Montati),
+                new SqlParameter("@Esito", Esito)
+            };
+            return GetExportStream(mode, "efn_GestioneID", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_GestioneID1")]
+        public IActionResult GetEfn_GestioneID1([FromRoute] string mode, [FromQuery] string Fileone, [FromQuery] string TT, [FromQuery] string Intervento)
+        {
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Fileone", Fileone),
+                new SqlParameter("@TT", TT),
+                new SqlParameter("@Intervento", Intervento)
+            };
+            return GetExportStream(mode, "efn_GestioneID1", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_MADRE_EXP")]
+        public IActionResult GetEfn_MADRE_EXP([FromRoute] string mode, [FromQuery] string Madre)
+        {
+            var parameters = new List<SqlParameter> { new SqlParameter("@Madre", Madre) };
+            return GetExportStream(mode, "efn_MADRE_EXP", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_MAGAZZINO")]
+        public IActionResult GetEfn_MAGAZZINO([FromRoute] string mode)
+        {
+            var parameters = new List<SqlParameter>();
+            return GetExportStream(mode, "efn_MAGAZZINO", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_MAGAZZINO_DMH")]
+        public IActionResult GetEfn_MAGAZZINO_DMH([FromRoute] string mode)
+        {
+            var parameters = new List<SqlParameter>();
+            return GetExportStream(mode, "efn_MAGAZZINO_DMH", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_MAGAZZINO_PBI")]
+        public IActionResult GetEfn_MAGAZZINO_PBI([FromRoute] string mode)
+        {
+            var parameters = new List<SqlParameter>();
+            return GetExportStream(mode, "efn_MAGAZZINO_PBI", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_MAINTENANCE")]
+        public IActionResult GetEfn_MAINTENANCE([FromRoute] string mode, [FromQuery] int Id)
+        {
+            var parameters = new List<SqlParameter> { new SqlParameter("@Id", Id) };
+            return GetExportStream(mode, "efn_MAINTENANCE", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_MovimentiMAG")]
+        public IActionResult GetEfn_MovimentiMAG([FromRoute] string mode)
+        {
+            var parameters = new List<SqlParameter>();
+            return GetExportStream(mode, "efn_MovimentiMAG", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_PDFMapping")]
+        public IActionResult GetEfn_PDFMapping([FromRoute] string mode, [FromQuery] string Ambiente)
+        {
+            var parameters = new List<SqlParameter> { new SqlParameter("@Ambiente", Ambiente) };
+            return GetExportStream(mode, "efn_PDFMapping", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_PREVIEWPL")]
+        public IActionResult GetEfn_PREVIEWPL([FromRoute] string mode, [FromQuery] int Id)
+        {
+            var parameters = new List<SqlParameter> { new SqlParameter("@Id", Id) };
+            return GetExportStream(mode, "efn_PREVIEWPL", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_PRIMIINGRESSI")]
+        public IActionResult GetEfn_PRIMIINGRESSI([FromRoute] string mode, [FromQuery] int Tipo)
+        {
+            var parameters = new List<SqlParameter> { new SqlParameter("@Tipo", Tipo) };
+            return GetExportStream(mode, "efn_PRIMIINGRESSI", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_PROVE")]
+        public IActionResult GetEfn_PROVE([FromRoute] string mode, [FromQuery] string TRR)
+        {
+            var parameters = new List<SqlParameter> { new SqlParameter("@TRR", TRR) };
+            return GetExportStream(mode, "efn_PROVE", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_RIGHEORDINE")]
+        public IActionResult GetEfn_RIGHEORDINE([FromRoute] string mode, [FromQuery] string Magazzini)
+        {
+            var parameters = new List<SqlParameter> { new SqlParameter("@Magazzini", Magazzini) };
+            return GetExportStream(mode, "efn_RIGHEORDINE", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_RIGHEORDINE1")]
+        public IActionResult GetEfn_RIGHEORDINE1([FromRoute] string mode, [FromQuery] string Magazzini)
+        {
+            var parameters = new List<SqlParameter> { new SqlParameter("@Magazzini", Magazzini) };
+            return GetExportStream(mode, "efn_RIGHEORDINE1", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_RIGHEORDINE2")]
+        public IActionResult GetEfn_RIGHEORDINE2([FromRoute] string mode, [FromQuery] string Magazzini)
+        {
+            var parameters = new List<SqlParameter> { new SqlParameter("@Magazzini", Magazzini) };
+            return GetExportStream(mode, "efn_RIGHEORDINE2", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_SchedeMontaggio")]
+        public IActionResult GetEfn_SchedeMontaggio([FromRoute] string mode)
+        {
+            var parameters = new List<SqlParameter>();
+            return GetExportStream(mode, "efn_SchedeMontaggio", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_SPC")]
+        public IActionResult GetEfn_SPC([FromRoute] string mode, [FromQuery] string MotoMotore, [FromQuery] string Modello)
+        {
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@MotoMotore", MotoMotore),
+                new SqlParameter("@Modello", Modello)
+            };
+            return GetExportStream(mode, "efn_SPC", ProgramType.Function, parameters);
+        }
+
+        [HttpGet("{mode}/efn_UltimoMovimento")]
+        public IActionResult GetEfn_UltimoMovimento([FromRoute] string mode)
+        {
+            var parameters = new List<SqlParameter>();
+            return GetExportStream(mode, "efn_UltimoMovimento", ProgramType.Function, parameters);
         }
 
         #region Private
 
-        private IActionResult GetExportStream(string mode, string functionName, ProgramType functionType, List<SqlParameter> parameters, Stopwatch stopwatch)
+        private IActionResult GetExportStream(string mode, string functionName, ProgramType functionType, List<SqlParameter> parameters)
         {
+            var stopwatch = Stopwatch.StartNew();
+
             if (mode.Equals("Xml", StringComparison.OrdinalIgnoreCase))
             {
                 return GetXmlStream(functionName, functionType, parameters, stopwatch);
@@ -101,17 +364,12 @@ namespace DucatiExcelApi.Controllers
         /// <returns></returns>
         private IActionResult GetJsonStream(string functionName, ProgramType functionType, List<SqlParameter> parameters, Stopwatch stopwatch)
         {
-            var dt = _dataExportService.Execute(functionName, functionType, parameters);
+            MemoryStream stream = _dataExportEngine.GetJsonStream(functionName, functionType, parameters, stopwatch);
 
-            string json = JsonConvert.SerializeObject(dt, Newtonsoft.Json.Formatting.None);
-
-            stopwatch.Stop();
-            _logger.LogInformation("[{Function}] JsonStream - Tempo totale: {Elapsed}", functionName, stopwatch.Elapsed);
-
-            var bytes = Encoding.UTF8.GetBytes(json);
-            var stream = new MemoryStream(bytes);
             return File(stream, "application/json", $"{functionName}.json", enableRangeProcessing: false);
         }
+
+        
 
         /// <summary>
         /// Genera o restituisce da cache un file JSON basato su un DataSet ottenuto dal database.
@@ -123,11 +381,6 @@ namespace DucatiExcelApi.Controllers
         /// <param name="parameters">Lista di parametri SQL per la query.</param>
         /// <param name="stopwatch">Stopwatch per misurare il tempo di generazione.</param>
         /// <returns>IActionResult con il file JSON, leggibile da client esterni.</returns>
-
-        /// <summary>
-        /// Genera o restituisce da cache un file JSON “Excel-friendly”
-        /// (array di oggetti piatti, apribile direttamente da Excel senza Power Query).
-        /// </summary>
         private IActionResult GetJsonStreamWithCache(string functionName, ProgramType functionType, List<SqlParameter> parameters, Stopwatch stopwatch)
         {
             string upn = "user@example.com";
@@ -143,62 +396,12 @@ namespace DucatiExcelApi.Controllers
                 return PhysicalFile(existing.FilePath, "application/json; charset=utf-8", Path.GetFileName(existing.FilePath));
             }
 
-            // Generazione file
-            var lazyTask = _generationTasks.GetOrAdd(cacheKey, k => new Lazy<Task<string>>(async () =>
-            {
-                if (_cache.TryGetValue(cacheKey, out var before) &&
-                    System.IO.File.Exists(before.FilePath) &&
-                    DateTime.UtcNow < before.Expiration)
-                    return before.FilePath;
-
-                _logger.LogInformation("[{Function}] Generazione JSON Excel-friendly INIZIATA per {Key}", functionName, cacheKey);
-
-                // Query DB
-                var dt = _dataExportService.Execute(functionName, functionType, parameters);
-
-                // Converti il DataTable in una lista di dizionari piatti
-                var rows = new List<Dictionary<string, object?>>();
-                foreach (DataRow dr in dt.Rows)
-                {
-                    var dict = new Dictionary<string, object?>();
-                    foreach (DataColumn col in dt.Columns)
-                        dict[col.ColumnName] = dr[col] == DBNull.Value ? null : dr[col];
-                    rows.Add(dict);
-                }
-
-                // Serializzazione “Excel-friendly”
-                var wrapper = new { rows };
-                string json = JsonConvert.SerializeObject(wrapper, Formatting.Indented);
-
-                // Scrittura file
-                var fileName = $"{functionName}_{Guid.NewGuid():N}.json";
-                var tempPath = Path.Combine(folderPath, fileName);
-                var utf8NoBom = new UTF8Encoding(false);
-                await System.IO.File.WriteAllTextAsync(tempPath, json, utf8NoBom);
-
-                _cache[cacheKey] = (tempPath, DateTime.UtcNow.AddMinutes(cacheDurationMinutes));
-                _logger.LogInformation("[{Function}] JSON Excel-friendly COMPLETATO per {Key} (path={Path})", functionName, cacheKey, tempPath);
-
-                return tempPath;
-            }));
-
-            string filePath;
-            try
-            {
-                filePath = lazyTask.Value.Result;
-            }
-            catch (Exception ex)
-            {
-                _generationTasks.TryRemove(cacheKey, out _);
-                _logger.LogError(ex, "[{Function}] Errore durante la generazione JSON Excel-friendly per {Key}", functionName, cacheKey);
-                throw;
-            }
-
-            stopwatch.Stop();
-            _logger.LogInformation("[{Function}] GetJsonStreamWithCache - Tempo totale: {Elapsed}", functionName, stopwatch.Elapsed);
+            string filePath = _dataExportEngine.GetJsonStreamWithCache(functionName, functionType, parameters, stopwatch, cacheKey, _generationTasks, _cache);
 
             return PhysicalFile(filePath, "application/json; charset=utf-8", Path.GetFileName(filePath));
         }
+
+        
 
 
         #endregion
@@ -214,21 +417,12 @@ namespace DucatiExcelApi.Controllers
         /// <param name="parameters">Lista di parametri SQL per la query.</param>
         /// <param name="stopwatch">Stopwatch per misurare il tempo totale di generazione.</param>
         /// <returns>IActionResult con il contenuto XML in memoria pronto per il download o lettura da client.</returns>
-
         private IActionResult GetXmlStream(string functionName, ProgramType functionType, List<SqlParameter> parameters, Stopwatch stopwatch)
         {
-            var dt = _dataExportService.Execute(functionName, functionType, parameters);
+            MemoryStream ms;
+            string xmlContent;
 
-            // Scrivi tutto in memoria
-            using var ms = new MemoryStream();
-            dt.WriteXml(ms, XmlWriteMode.WriteSchema);
-            ms.Position = 0;
-
-            stopwatch.Stop();
-            _logger.LogInformation("[{Function}] GetXmlStream - Tempo totale: {Elapsed}", functionName, stopwatch.Elapsed);
-
-            // Converti in stringa (Excel legge meglio da UTF-8)
-            var xmlContent = Encoding.UTF8.GetString(ms.ToArray());
+            _dataExportEngine.GetXmlStream(functionName, functionType, parameters, stopwatch, out ms, out xmlContent);
 
             // Rimuovi header che possono attivare lo streaming
             Response.Headers.Remove("Transfer-Encoding");
@@ -236,8 +430,11 @@ namespace DucatiExcelApi.Controllers
             Response.Headers["Content-Length"] = xmlContent.Length.ToString();
 
             // ✅ Risposta completa, con Content-Length fisso: Excel aspetta fino alla fine
-            return Content(xmlContent, "application/xml", Encoding.UTF8);
+            var bytes = Encoding.UTF8.GetBytes(xmlContent);
+            return File(bytes, "application/xml; charset=utf-8", "export.xml");
         }
+
+        
 
         /// <summary>
         /// Genera o restituisce da cache un file XML basato su un DataSet ottenuto dal database.
@@ -251,7 +448,6 @@ namespace DucatiExcelApi.Controllers
         /// <param name="parameters">Lista di parametri SQL per la query.</param>
         /// <param name="stopwatch">Stopwatch per misurare il tempo totale di generazione.</param>
         /// <returns>IActionResult che restituisce il file XML fisico pronto per il download o per la lettura da client esterni.</returns>
-
         private IActionResult GetXmlStreamWithCache(string functionName, ProgramType functionType, List<SqlParameter> parameters, Stopwatch stopwatch)
         {
             string upn = "user@example.com";
@@ -267,107 +463,15 @@ namespace DucatiExcelApi.Controllers
                 return PhysicalFile(existing.FilePath, "application/xml", Path.GetFileName(existing.FilePath));
             }
 
-            var lazyTask = _generationTasks.GetOrAdd(cacheKey, k => new Lazy<Task<string>>(() => Task.Run(async () =>
-            {
-                if (_cache.TryGetValue(cacheKey, out var before) &&
-                    System.IO.File.Exists(before.FilePath) &&
-                    DateTime.UtcNow < before.Expiration)
-                    return before.FilePath;
-
-                _logger.LogInformation("[{Function}] Generazione file INIZIATA per {Key}", functionName, cacheKey);
-
-                // --- QUERY DB (una sola volta per cacheKey) ---
-                var dt = _dataExportService.Execute(functionName, functionType, parameters);
-
-                // --- CREAZIONE XML in memoria ---
-                string xmlContent;
-                using (var sw = new StringWriter())
-                {
-                    dt.WriteXml(sw, XmlWriteMode.WriteSchema);
-                    xmlContent = sw.ToString();
-                }
-
-                // --- VALIDAZIONE XML ---
-                bool xmlOk = IsWellFormedXml(xmlContent);
-
-                if (!xmlOk)
-                {
-                    _logger.LogWarning("[{Function}] XML non well-formed per {Key} — tentativo di pulizia.", functionName, cacheKey);
-                    xmlContent = CleanString(xmlContent);
-
-                    if (!IsWellFormedXml(xmlContent))
-                    {
-                        _logger.LogError("[{Function}] XML ancora non valido dopo la pulizia per {Key}.", functionName, cacheKey);
-                        throw new InvalidDataException("XML non valido anche dopo la pulizia.");
-                    }
-                }
-
-                // --- SCRITTURA FILE UTF-8 SENZA BOM ---
-                var fileName = $"{functionName}_{Guid.NewGuid():N}.xml";
-                var folderPath = @"C:\temp";
-                var tempPath = Path.Combine(folderPath, fileName);
-
-                // Forza UTF-8 senza BOM
-                var utf8NoBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
-                await System.IO.File.WriteAllTextAsync(tempPath, xmlContent, utf8NoBom);
-
-                // --- SALVA IN CACHE ---
-                _cache[cacheKey] = (tempPath, DateTime.UtcNow.AddMinutes(10));
-
-                _logger.LogInformation("[{Function}] Generazione COMPLETATA per {Key} (path={Path})", functionName, cacheKey, tempPath);
-
-                return tempPath;
-            })));
-
-            string filePath = null;
-            try
-            {
-                filePath = lazyTask.Value.Result;
-            }
-            catch (Exception ex)
-            {
-                _generationTasks.TryRemove(cacheKey, out _);
-                _logger.LogError(ex, "[{Function}] Errore durante la generazione per {Key}", functionName, cacheKey);
-                throw;
-            }
-
-            stopwatch.Stop();
-            _logger.LogInformation("[{Function}] GetXmlStreamRedirect - Tempo totale: {Elapsed}", functionName, stopwatch.Elapsed);
+            string filePath = _dataExportEngine.GetXmlStreamWithCache(functionName, functionType, parameters, stopwatch, cacheKey, _generationTasks, _cache);
 
             return PhysicalFile(filePath, "application/xml", Path.GetFileName(filePath));
         }
 
+        
 
-        /// <summary>
-        /// Verifica se una stringa è un XML ben formato.
-        /// Restituisce true se il parsing XML ha successo, false in caso contrario.
-        /// </summary>
-        /// <param name="xml">Stringa contenente l'XML da validare.</param>
-        /// <returns>Booleano che indica se l'XML è ben formato.</returns>
-        private bool IsWellFormedXml(string xml)
-        {
-            try
-            {
-                var doc = new System.Xml.XmlDocument();
-                doc.LoadXml(xml);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
 
-        /// <summary>
-        /// Pulisce una stringa rimuovendo caratteri di controllo non ammessi in XML.
-        /// Mantiene solo caratteri validi per XML e line endings (\r, \n).
-        /// </summary>
-        /// <param name="s">Stringa da pulire.</param>
-        /// <returns>Stringa filtrata pronta per essere scritta in XML.</returns>
-        private string CleanString(string s)
-        {
-            return new string(s.Where(c => c == '\n' || c == '\r' || c >= ' ').ToArray());
-        }
+       
         #endregion
 
         #endregion

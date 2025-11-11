@@ -25,14 +25,27 @@ namespace DucatiMeccaExcelApi.Engine
         public DataTable Execute(string programName, ProgramType programType, List<SqlParameter> parameters)
         {
             return programType == ProgramType.StoredProcedure ?
-                EseguiStoredProcedure(programName, parameters) :
+                ExecuteStoredProcedure(programName, parameters) :
                 ExecuteFunction(programName, parameters);
         }
 
-        private DataTable EseguiStoredProcedure(string programName, List<SqlParameter> parameters)
+        private DataTable ExecuteStoredProcedure(string procedureName, List<SqlParameter> parameters)
         {
-            throw new NotImplementedException();
-        }
+            _stopwatch = new Stopwatch();
+            _stopwatch.Start();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand cmd = new SqlCommand(procedureName, conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandTimeout = 0;
+
+                if (parameters != null && parameters.Count > 0)
+                    cmd.Parameters.AddRange(parameters.ToArray());
+
+                return ReturnDataTable(procedureName, cmd);
+            }
+        }        
 
         private DataTable ExecuteFunction(string functionName, List<SqlParameter> parameters)
         {
@@ -52,38 +65,45 @@ namespace DucatiMeccaExcelApi.Engine
                 if (parameters != null && parameters.Count > 0)
                     cmd.Parameters.AddRange(parameters.ToArray());
 
-                // --- Esegui la query e riempi la DataTable originale ---
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-
-                // --- Crea una nuova DataTable con tutte le colonne come stringhe ---
-                DataTable dtString = new DataTable(functionName);
-                foreach (DataColumn col in dt.Columns)
-                {
-                    dtString.Columns.Add(col.ColumnName, typeof(string));
-                }
-
-                // --- Copia tutti i dati convertendoli in stringhe ---
-                foreach (DataRow row in dt.Rows)
-                {
-                    DataRow newRow = dtString.NewRow();
-                    foreach (DataColumn col in dt.Columns)
-                    {
-                        newRow[col.ColumnName] = row[col]?.ToString();
-                    }
-                    dtString.Rows.Add(newRow);
-                }
-
-                _stopwatch.Stop();
-                TimeSpan ts = _stopwatch.Elapsed;
-                Console.WriteLine($"Fine ExecuteReader - Tempo trascorso: {ts}");
-
-                return dtString;
+                return ReturnDataTable(functionName, cmd);
             }
         }
 
+        private DataTable ReturnDataTable(string sqlObjectName, SqlCommand cmd)
+        {
+            Console.WriteLine($"Inizio [{sqlObjectName}]... {DateTime.Now}");
 
+            // --- Esegui la stored procedure e riempi la DataTable originale ---
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            // --- Crea una nuova DataTable con tutte le colonne come stringhe ---
+            DataTable resultDataTable = new DataTable(sqlObjectName);
+            foreach (DataColumn col in dt.Columns)
+            {
+                resultDataTable.Columns.Add(col.ColumnName, typeof(string));
+            }
+
+            // --- Copia tutti i dati convertendoli in stringhe ---
+            foreach (DataRow row in dt.Rows)
+            {
+                DataRow newRow = resultDataTable.NewRow();
+                foreach (DataColumn col in dt.Columns)
+                {
+                    newRow[col.ColumnName] = row[col]?.ToString();
+                }
+                resultDataTable.Rows.Add(newRow);
+            }
+
+            _stopwatch.Stop();
+            TimeSpan ts = _stopwatch.Elapsed;
+            Console.WriteLine($"Fine [{sqlObjectName}] - Tempo trascorso: {ts}");
+
+            return resultDataTable;
+        }
+
+        #region not active
         // 🔹 Nuovo metodo: STREAMING JSON
         public async Task ExecuteFunctionStream(HttpResponse response, string functionName, List<SqlParameter> parameters)
         {
@@ -140,5 +160,7 @@ namespace DucatiMeccaExcelApi.Engine
             ts = _stopwatch.Elapsed;
             Console.WriteLine($"Fine StreamWriter - Tempo trascorso: {ts:hh\\:mm\\:ss\\.fff}");
         }
+
+        #endregion
     }
 }
