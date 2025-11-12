@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.Collections.Concurrent;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 
 namespace DucatiMeccaExcelApi.Engine
@@ -108,6 +109,7 @@ namespace DucatiMeccaExcelApi.Engine
             var dt = _dataExportService.Execute(functionName, functionType, parameters);
             ms = new MemoryStream();
             dt.WriteXml(ms, XmlWriteMode.WriteSchema);
+            
             ms.Position = 0;
 
             stopwatch.Stop();
@@ -141,7 +143,8 @@ namespace DucatiMeccaExcelApi.Engine
                 string xmlContent;
                 using (var sw = new StringWriter())
                 {
-                    dt.WriteXml(sw, XmlWriteMode.WriteSchema);
+                    //dt.WriteXml(sw, XmlWriteMode.WriteSchema);
+                    dt.WriteXml(sw, XmlWriteMode.IgnoreSchema);
                     xmlContent = sw.ToString();
                 }
 
