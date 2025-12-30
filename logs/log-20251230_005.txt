@@ -1,0 +1,15 @@
+2025-12-30 13:14:52.935 +01:00 [INF] User profile is available. Using 'C:\Users\PaoloLuca\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-30 13:14:53.629 +01:00 [INF] Now listening on: https://localhost:7250
+2025-12-30 13:14:53.632 +01:00 [INF] Now listening on: http://localhost:5297
+2025-12-30 13:14:53.718 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-30 13:14:53.720 +01:00 [INF] Hosting environment: Development
+2025-12-30 13:14:53.723 +01:00 [INF] Content root path: C:\Users\PaoloLuca\Documents\source\GitHub_TwoTeam\MeccaExcelApi
+2025-12-30 13:14:55.235 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/index.html - null null
+2025-12-30 13:14:55.790 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/index.html - 200 null text/html;charset=utf-8 569.4205ms
+2025-12-30 13:14:55.891 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - null null
+2025-12-30 13:14:55.891 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_vs/browserLink - null null
+2025-12-30 13:14:55.920 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - 200 16523 application/javascript; charset=utf-8 29.7249ms
+2025-12-30 13:14:56.074 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_vs/browserLink - 200 null text/javascript; charset=UTF-8 183.155ms
+2025-12-30 13:14:56.174 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - null null
+2025-12-30 13:14:56.258 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 86.7579ms
+2025-12-30 13:16:00.907 +01:00 [INF] Applicazione avviata correttamente

@@ -1,0 +1,22 @@
+2025-12-30 14:23:56.150 +01:00 [INF] User profile is available. Using 'C:\Users\PaoloLuca\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-30 14:23:56.464 +01:00 [INF] Now listening on: https://localhost:7250
+2025-12-30 14:23:56.467 +01:00 [INF] Now listening on: http://localhost:5297
+2025-12-30 14:23:56.566 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-30 14:23:56.569 +01:00 [INF] Hosting environment: Development
+2025-12-30 14:23:56.571 +01:00 [INF] Content root path: C:\Users\PaoloLuca\Documents\source\GitHub_TwoTeam\MeccaExcelApi
+2025-12-30 14:23:58.057 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/index.html - null null
+2025-12-30 14:23:58.367 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/index.html - 200 null text/html;charset=utf-8 321.075ms
+2025-12-30 14:23:58.426 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - null null
+2025-12-30 14:23:58.426 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_vs/browserLink - null null
+2025-12-30 14:23:58.440 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - 200 16523 application/javascript; charset=utf-8 13.9029ms
+2025-12-30 14:23:58.500 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_vs/browserLink - 200 null text/javascript; charset=UTF-8 73.1236ms
+2025-12-30 14:23:58.538 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - null null
+2025-12-30 14:23:58.572 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 34.5771ms
+2025-12-30 14:24:08.877 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/Test - null null
+2025-12-30 14:24:08.914 +01:00 [INF] Executing endpoint 'DucatiMeccaExcelApi.Controllers.Test.TestConnection (DucatiMeccaExcelApi)'
+2025-12-30 14:24:08.990 +01:00 [INF] Route matched with {action = "TestConnection", controller = "Test"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult TestConnection() on controller DucatiMeccaExcelApi.Controllers.Test (DucatiMeccaExcelApi).
+2025-12-30 14:24:09.036 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-12-30 14:24:09.087 +01:00 [INF] Executed action DucatiMeccaExcelApi.Controllers.Test.TestConnection (DucatiMeccaExcelApi) in 69.8911ms
+2025-12-30 14:24:09.101 +01:00 [INF] Executed endpoint 'DucatiMeccaExcelApi.Controllers.Test.TestConnection (DucatiMeccaExcelApi)'
+2025-12-30 14:24:09.112 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/Test - 200 null application/json; charset=utf-8 235.2475ms
+2025-12-30 15:23:49.627 +01:00 [INF] Applicazione avviata correttamente

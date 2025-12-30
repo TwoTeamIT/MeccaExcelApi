@@ -15,11 +15,11 @@ namespace DucatiMeccaExcelApi.Engine
     public class DataExportEngine
     {
         private DataExportService _dataExportService;
-        private ILogger<Functions> _logger;
+        private ILogger _logger;
         private string _folderPath;
         private double _cacheDurationMinutes;
 
-        public DataExportEngine(string connStr, ILogger<Functions> logger, IOptions<EndPointCacheConfig> options) {
+        public DataExportEngine(string connStr, ILogger logger, IOptions<EndPointCacheConfig> options) {
             _logger = logger;
 
             _folderPath = options.Value.FolderPath;

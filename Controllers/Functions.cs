@@ -1,9 +1,11 @@
 ﻿using DucatiMeccaExcelApi.Engine;
 using DucatiMeccaExcelApi.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Concurrent;
 using System.Data;
 using System.Diagnostics;
@@ -20,6 +22,7 @@ namespace DucatiExcelApi.Controllers
 
         private readonly ILogger<Functions> _logger;
         private DataExportEngine _dataExportEngine;
+        private SecurityOptions _securityOptions;
 
         // Cache in memoria: per ogni chiave (funzione + utente + parametri)
         // memorizza il percorso del file XML e la sua data di scadenza
@@ -31,7 +34,10 @@ namespace DucatiExcelApi.Controllers
         private static ConcurrentDictionary<string, Lazy<Task<string>>> _generationTasks
             = new ConcurrentDictionary<string, Lazy<Task<string>>>();
 
-        public Functions(IConfiguration configuration, ILogger<Functions> logger, IOptions<EndPointCacheConfig> options)
+        public Functions(IConfiguration configuration, 
+            ILogger<Functions> logger, 
+            IOptions<EndPointCacheConfig> cacheOptions, 
+            IOptions<SecurityOptions> securityOptions)
         {
             var connStr = configuration.GetConnectionString("DefaultConnection");
 
@@ -40,7 +46,10 @@ namespace DucatiExcelApi.Controllers
 
             _logger = logger;
 
-            _dataExportEngine = new DataExportEngine(connStr, logger, options);
+            _dataExportEngine = new DataExportEngine(connStr, logger, cacheOptions);
+
+            _securityOptions = securityOptions.Value;
+
         }
 
         //[HttpGet("efn_ARTICOLI_XML")]
@@ -325,29 +334,48 @@ namespace DucatiExcelApi.Controllers
 
         #region Private
 
-        private IActionResult GetExportStream(string mode, string functionName, ProgramType functionType, List<SqlParameter> parameters)
+        private IActionResult GetExportStream(string mode, string functionName, ProgramType operationType, List<SqlParameter> parameters)
         {
+
             var stopwatch = Stopwatch.StartNew();
 
-            if (mode.Equals("Xml", StringComparison.OrdinalIgnoreCase))
+            var userName = DomainUpnManager.GetUpnFromDomain(User.Identity?.Name ?? "anonymous", _securityOptions);
+
+            parameters.Add(new SqlParameter("@upn", userName));
+
+            // Log dell’azione
+            _logger.LogInformation("[#ENDPOINT#] User {User} called GetExportStream. Mode={Mode}, Function={Function}, Type={Type}, Params={Params}",
+                userName,
+                mode,
+                functionName,
+                operationType,
+                string.Join(", ", parameters.Select(p => $"{p.ParameterName}={p.Value}")));
+
+            IActionResult result;
+
+            try
             {
-                return GetXmlStream(functionName, functionType, parameters, stopwatch);
+
+                if (mode.Equals("Xml", StringComparison.OrdinalIgnoreCase))
+                    result = GetXmlStream(functionName, operationType, parameters, stopwatch);
+                else if (mode.Equals("XmlExcel", StringComparison.OrdinalIgnoreCase))
+                    result = GetXmlStreamWithCache(functionName, operationType, parameters, stopwatch);
+                else if (mode.Equals("Json", StringComparison.OrdinalIgnoreCase))
+                    result = GetJsonStream(functionName, operationType, parameters, stopwatch);
+                else if (mode.Equals("JsonExcel", StringComparison.OrdinalIgnoreCase))
+                    result = GetJsonStreamWithCache(functionName, operationType, parameters, stopwatch);
+                else
+                    result = BadRequest("Invalid mode. Use 'XmlExcel', 'Json', or 'JsonExcel'.");
+
+                stopwatch.Stop();
+
+                _logger.LogInformation("GetExportStream completed in {ElapsedMilliseconds} ms for user {User}", stopwatch.ElapsedMilliseconds, userName);
+
+                return result;
             }
-            else if (mode.Equals("XmlExcel", StringComparison.OrdinalIgnoreCase))
+            catch (Exception ex)
             {
-                return GetXmlStreamWithCache(functionName, functionType, parameters, stopwatch);
-            }
-            else if (mode.Equals("Json", StringComparison.OrdinalIgnoreCase))
-            {
-                return GetJsonStream(functionName, functionType, parameters, stopwatch);
-            }
-            else if (mode.Equals("JsonExcel", StringComparison.OrdinalIgnoreCase))
-            {
-                return GetJsonStreamWithCache(functionName, functionType, parameters, stopwatch);
-            }
-            else
-            {
-                return BadRequest("Invalid mode. Use 'XmlExcel', 'Json', or 'JsonExcel'.");
+                return BadRequest("GetExportStream broken.Exceptio ex = " + ex.Message);
             }
         }
 

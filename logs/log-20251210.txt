@@ -1,0 +1,1 @@
+2025-12-10 14:49:21.560 +01:00 [INF] Applicazione avviata correttamente

@@ -1,7 +1,7 @@
 ﻿using DucatiMeccaExcelApi.Utility;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.IdentityModel.Tokens;
+using Serilog;
 
 namespace DucatiExcelApi
 {
@@ -9,45 +9,51 @@ namespace DucatiExcelApi
     {
         public static void Main(string[] args)
         {
+            // --- Logger per gli endpoint ---
+            var endpointLogger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.Console()
+                .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
+            // --- Logger per il middleware / access denied ---
+            var securityLogger = new LoggerConfiguration()
+                .MinimumLevel.Warning()
+                .WriteTo.File("logs/access-denied-.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.Configure<EndPointCacheConfig>(builder.Configuration.GetSection("EndPointCacheConfig"));
+            // --- Usa Serilog per i controller / endpoint ---
+            builder.Host.UseSerilog((ctx, lc) => lc
+                .MinimumLevel.Information()
+                .WriteTo.Console()
+                .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+            );
 
-            // Add services to the container.
+            // --- Bind configurazioni ---
+            builder.Services.Configure<EndPointCacheConfig>(
+                builder.Configuration.GetSection("EndPointCacheConfig"));
 
+            builder.Services.Configure<SecurityOptions>(
+                builder.Configuration.GetSection("Security"));
+
+            // --- Servizi principali ---
             builder.Services.AddControllers();
-
-            // JWT Bearer Authentication (ADFS config to be added later)
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    // TODO: Replace with client ADFS details when available
-                    options.Authority = "https://adfs.cliente.it/adfs";
-                    options.Audience = "your-api-resource-id";
-                    options.RequireHttpsMetadata = true;
-
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true
-                    };
-                });
-
-
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddAuthentication(IISDefaults.AuthenticationScheme);
+            builder.Services.AddAuthorization();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
+            app.UseHttpsRedirection();
 
             app.UseStaticFiles(new StaticFileOptions
             {
@@ -55,14 +61,29 @@ namespace DucatiExcelApi
                 RequestPath = "/temp"
             });
 
-            app.UseHttpsRedirection();
+            app.UseAuthentication();
 
-            app.UseAuthentication();   // 👈 PRIMA
-            app.UseAuthorization();    // 👈 POI
+            // Passiamo il logger dedicato al middleware
+            app.UseMiddleware<ValidateWindowsUserMiddleware>(securityLogger);
+
+            app.UseAuthorization();
 
             app.MapControllers();
 
-            app.Run();
+            try
+            {
+                endpointLogger.Information("Applicazione avviata correttamente");
+                app.Run();
+            }
+            catch (Exception ex)
+            {
+                endpointLogger.Fatal(ex, "Errore fatale all'avvio dell'applicazione");
+            }
+            finally
+            {
+                endpointLogger.Dispose();
+                securityLogger.Dispose();
+            }
         }
     }
 }
