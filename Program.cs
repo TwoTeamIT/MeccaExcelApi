@@ -9,65 +9,98 @@ namespace DucatiExcelApi
     {
         public static void Main(string[] args)
         {
-            // --- Logger per gli endpoint ---
+            // =======================
+            // LOGGER ENDPOINT
+            // =======================
             var endpointLogger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .WriteTo.Console()
                 .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
-            // --- Logger per il middleware / access denied ---
+            // =======================
+            // LOGGER SICUREZZA
+            // =======================
             var securityLogger = new LoggerConfiguration()
                 .MinimumLevel.Warning()
-                .WriteTo.File("logs/access-denied-.txt", rollingInterval: RollingInterval.Day)
+                .WriteTo.File("logs/access-audit-.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
             var builder = WebApplication.CreateBuilder(args);
 
-            // --- Usa Serilog per i controller / endpoint ---
+            // =======================
+            // SERILOG HOST
+            // =======================
             builder.Host.UseSerilog((ctx, lc) => lc
                 .MinimumLevel.Information()
                 .WriteTo.Console()
                 .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
             );
 
-            // --- Bind configurazioni ---
+            // =======================
+            // CONFIGURATION BINDING
+            // =======================
             builder.Services.Configure<EndPointCacheConfig>(
                 builder.Configuration.GetSection("EndPointCacheConfig"));
 
             builder.Services.Configure<SecurityOptions>(
                 builder.Configuration.GetSection("Security"));
 
-            // --- Servizi principali ---
+            // =======================
+            // MVC / API
+            // =======================
             builder.Services.AddControllers();
+
+            // =======================
+            // WINDOWS AUTHENTICATION
+            // =======================
             builder.Services.AddAuthentication(IISDefaults.AuthenticationScheme);
             builder.Services.AddAuthorization();
+
+            // =======================
+            // SWAGGER
+            // =======================
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
+            // =======================
+            // SWAGGER UI (with credentials)
+            // =======================
+            //if (app.Environment.IsDevelopment())
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ducati Excel API v1");
+
+                // Fondamentale per Windows Auth da browser
+                c.ConfigObject.AdditionalItems["withCredentials"] = true;
             });
 
-            app.UseHttpsRedirection();
-
+            // =======================
+            // STATIC FILES
+            // =======================
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(Path.GetTempPath()),
                 RequestPath = "/temp"
             });
 
+            // =======================
+            // AUTH PIPELINE (ORDINE CRITICO)
+            // =======================
             app.UseAuthentication();
-
-            // Passiamo il logger dedicato al middleware
-            app.UseMiddleware<ValidateWindowsUserMiddleware>(securityLogger);
-
             app.UseAuthorization();
 
+            // =======================
+            // MIDDLEWARE CUSTOM
+            // =======================
+            app.UseMiddleware<ValidateWindowsUserMiddleware>(securityLogger);
+
+            // =======================
+            // ROUTING
+            // =======================
             app.MapControllers();
 
             try

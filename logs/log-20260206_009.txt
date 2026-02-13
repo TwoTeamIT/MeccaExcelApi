@@ -1,0 +1,25 @@
+2026-02-06 11:44:09.421 +01:00 [INF] User profile is available. Using 'C:\Users\PaoloLuca\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-02-06 11:44:09.576 +01:00 [INF] Now listening on: https://localhost:7250
+2026-02-06 11:44:09.578 +01:00 [INF] Now listening on: http://localhost:5297
+2026-02-06 11:44:09.630 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-06 11:44:09.631 +01:00 [INF] Hosting environment: Development
+2026-02-06 11:44:09.632 +01:00 [INF] Content root path: C:\Users\PaoloLuca\Documents\source\GitHub_TwoTeam\MeccaExcelApi
+2026-02-06 11:44:11.279 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/index.html - null null
+2026-02-06 11:44:11.632 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/index.html - 200 null text/html;charset=utf-8 373.3888ms
+2026-02-06 11:44:11.666 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_vs/browserLink - null null
+2026-02-06 11:44:11.666 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - null null
+2026-02-06 11:44:11.686 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - 200 16523 application/javascript; charset=utf-8 20.2691ms
+2026-02-06 11:44:11.726 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_vs/browserLink - 200 null text/javascript; charset=UTF-8 59.7967ms
+2026-02-06 11:44:11.748 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - null null
+2026-02-06 11:44:11.785 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 37.8132ms
+2026-02-06 11:44:23.678 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/StoredProcedures/xml/v4_ADDIN_ListaMancanteSfuso - null null
+2026-02-06 11:44:23.704 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.StoredProcedures.GetV4_ADDIN_ListaMancanteSfuso (DucatiMeccaExcelApi)'
+2026-02-06 11:44:23.761 +01:00 [INF] Route matched with {action = "GetV4_ADDIN_ListaMancanteSfuso", controller = "StoredProcedures"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetV4_ADDIN_ListaMancanteSfuso(System.String) on controller DucatiExcelApi.Controllers.StoredProcedures (DucatiMeccaExcelApi).
+2026-02-06 11:44:24.122 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, StoredProcedure=v4_ADDIN_ListaMancanteSfuso, Type="StoredProcedure", Params=@upn=simona.guastella@ducati.com
+2026-02-06 11:44:44.190 +01:00 [INF] [v4_ADDIN_ListaMancanteSfuso] GetXmlStream - Tempo totale: "00:00:20.3808541"
+2026-02-06 11:44:44.201 +01:00 [INF] GetExportStream completed in 20380 ms for user simona.guastella@ducati.com
+2026-02-06 11:44:44.216 +01:00 [INF] Executing ContentResult with HTTP Response ContentType of application/xml; charset=utf-8
+2026-02-06 11:44:44.403 +01:00 [INF] Executed action DucatiExcelApi.Controllers.StoredProcedures.GetV4_ADDIN_ListaMancanteSfuso (DucatiMeccaExcelApi) in 20626.9828ms
+2026-02-06 11:44:44.407 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.StoredProcedures.GetV4_ADDIN_ListaMancanteSfuso (DucatiMeccaExcelApi)'
+2026-02-06 11:44:44.414 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/StoredProcedures/xml/v4_ADDIN_ListaMancanteSfuso - 200 674991 application/xml; charset=utf-8 20736.3166ms
+2026-02-06 11:49:51.469 +01:00 [INF] Applicazione avviata correttamente

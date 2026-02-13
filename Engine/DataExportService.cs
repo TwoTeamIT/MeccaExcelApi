@@ -22,11 +22,11 @@ namespace DucatiMeccaExcelApi.Engine
             _stopwatch = new Stopwatch();
         }
 
-        public DataTable Execute(string programName, ProgramType programType, List<SqlParameter> parameters)
+        public DataTable Execute(string programName, ProgramType programType, List<SqlParameter> parameters, string whereClause)
         {
             return programType == ProgramType.StoredProcedure ?
                 ExecuteStoredProcedure(programName, parameters) :
-                ExecuteFunction(programName, parameters);
+                ExecuteFunction(programName, parameters, whereClause);
         }
 
         private DataTable ExecuteStoredProcedure(string procedureName, List<SqlParameter> parameters)
@@ -47,7 +47,7 @@ namespace DucatiMeccaExcelApi.Engine
             }
         }        
 
-        private DataTable ExecuteFunction(string functionName, List<SqlParameter> parameters)
+        private DataTable ExecuteFunction(string functionName, List<SqlParameter> parameters, string whereClause)
         {
             _stopwatch = new Stopwatch();
             _stopwatch.Start();
@@ -59,7 +59,7 @@ namespace DucatiMeccaExcelApi.Engine
                 Console.WriteLine($"Inizio ExecuteReader... {DateTime.Now}");
 
                 string paramList = string.Join(", ", parameters.Select(p => p.ParameterName));
-                cmd.CommandText = $"SELECT * FROM {functionName}({paramList})";
+                cmd.CommandText = $"SELECT * FROM {functionName}({paramList}) " + whereClause;
                 cmd.CommandTimeout = 0;
 
                 if (parameters != null && parameters.Count > 0)
@@ -91,7 +91,11 @@ namespace DucatiMeccaExcelApi.Engine
                 DataRow newRow = resultDataTable.NewRow();
                 foreach (DataColumn col in dt.Columns)
                 {
-                    newRow[col.ColumnName] = row[col]?.ToString();
+                    object value = row[col];
+                    string safeValue = value == null || value == DBNull.Value ? "" : Convert.ToString(value);
+                    newRow[col.ColumnName] = safeValue;
+
+                    //newRow[col.ColumnName] = row[col]?.ToString();
                 }
                 resultDataTable.Rows.Add(newRow);
             }

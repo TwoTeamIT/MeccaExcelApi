@@ -1,0 +1,20 @@
+2026-01-21 16:25:32.339 +01:00 [INF] User profile is available. Using 'C:\Users\PaoloLuca\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-01-21 16:25:32.630 +01:00 [INF] Now listening on: https://localhost:7250
+2026-01-21 16:25:32.633 +01:00 [INF] Now listening on: http://localhost:5297
+2026-01-21 16:25:32.732 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-21 16:25:32.736 +01:00 [INF] Hosting environment: Development
+2026-01-21 16:25:32.738 +01:00 [INF] Content root path: C:\Users\PaoloLuca\Documents\source\GitHub_TwoTeam\MeccaExcelApi
+2026-01-21 16:25:34.338 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/index.html - null null
+2026-01-21 16:25:34.934 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/index.html - 200 null text/html;charset=utf-8 615.8566ms
+2026-01-21 16:25:34.994 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_vs/browserLink - null null
+2026-01-21 16:25:34.994 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - null null
+2026-01-21 16:25:35.036 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - 200 16523 application/javascript; charset=utf-8 41.2377ms
+2026-01-21 16:25:35.109 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_vs/browserLink - 200 null text/javascript; charset=UTF-8 115.6364ms
+2026-01-21 16:25:35.144 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - null null
+2026-01-21 16:25:35.209 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 65.9139ms
+2026-01-21 16:25:40.329 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/Functions/XmlExcel/efn_ARTICOLI - null null
+2026-01-21 16:25:40.361 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI (DucatiMeccaExcelApi)'
+2026-01-21 16:25:40.437 +01:00 [INF] Route matched with {action = "GetEfn_ARTICOLI", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_ARTICOLI(System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-01-21 16:25:41.956 +01:00 [INF] [#ENDPOINT#] User extern.paolo.luca@ducati.com called GetExportStream. Mode=XmlExcel, Function=efn_ARTICOLI, Type="Function", Params=@Distinta=, @upn=extern.paolo.luca@ducati.com
+2026-01-21 16:25:41.989 +01:00 [INF] [efn_ARTICOLI] Generazione file INIZIATA per efn_ARTICOLI|extern.paolo.luca@ducati.com|@Distinta=;@upn=extern.paolo.luca@ducati.com|Xml
+2026-01-21 16:41:24.717 +01:00 [INF] Applicazione avviata correttamente

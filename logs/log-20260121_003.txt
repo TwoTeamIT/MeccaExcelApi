@@ -1,0 +1,20 @@
+2026-01-21 16:15:41.062 +01:00 [INF] User profile is available. Using 'C:\Users\PaoloLuca\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-01-21 16:15:41.911 +01:00 [INF] Now listening on: https://localhost:7250
+2026-01-21 16:15:41.917 +01:00 [INF] Now listening on: http://localhost:5297
+2026-01-21 16:15:42.176 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-21 16:15:42.183 +01:00 [INF] Hosting environment: Development
+2026-01-21 16:15:42.186 +01:00 [INF] Content root path: C:\Users\PaoloLuca\Documents\source\GitHub_TwoTeam\MeccaExcelApi
+2026-01-21 16:15:44.105 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/index.html - null null
+2026-01-21 16:15:44.644 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/index.html - 200 null text/html;charset=utf-8 559.4312ms
+2026-01-21 16:15:44.725 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_vs/browserLink - null null
+2026-01-21 16:15:44.725 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - null null
+2026-01-21 16:15:44.812 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - 200 16523 application/javascript; charset=utf-8 88.7759ms
+2026-01-21 16:15:44.893 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_vs/browserLink - 200 null text/javascript; charset=UTF-8 169.3689ms
+2026-01-21 16:15:44.932 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - null null
+2026-01-21 16:15:45.040 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 109.7993ms
+2026-01-21 16:16:38.371 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/Functions/XmlExcel/efn_FOGLIO_MONTAGGIO?Ultimo=0&Where=nome%3D%27DU2602%27%20and%20rev%3D2%20and%20prog%3D0%20and%20parte%20like%20%27180104%25%27 - null null
+2026-01-21 16:16:38.418 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_FOGLIO_MONTAGGIO (DucatiMeccaExcelApi)'
+2026-01-21 16:16:38.481 +01:00 [INF] Route matched with {action = "GetEfn_FOGLIO_MONTAGGIO", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_FOGLIO_MONTAGGIO(System.String, Int32, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-01-21 16:17:06.309 +01:00 [INF] [#ENDPOINT#] User extern.paolo.luca@ducati.com called GetExportStream. Mode=XmlExcel, Function=efn_FOGLIO_MONTAGGIO, Type="Function", Params=@Ultimo=0, @upn=extern.paolo.luca@ducati.com
+2026-01-21 16:17:55.849 +01:00 [INF] [efn_FOGLIO_MONTAGGIO] Generazione file INIZIATA per efn_FOGLIO_MONTAGGIO|user@example.com|@Ultimo=0;@upn=extern.paolo.luca@ducati.com|Xml
+2026-01-21 16:24:37.476 +01:00 [INF] Applicazione avviata correttamente

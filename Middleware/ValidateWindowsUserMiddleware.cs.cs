@@ -1,7 +1,7 @@
 ﻿using DucatiMeccaExcelApi.Utility;
 using Microsoft.Extensions.Options;
 using Serilog;
-using System.Runtime.ConstrainedExecution;
+using System.Security.Claims;
 
 public class ValidateWindowsUserMiddleware
 {
@@ -9,7 +9,10 @@ public class ValidateWindowsUserMiddleware
     private readonly SecurityOptions _options;
     private readonly Serilog.ILogger _securityLogger;
 
-    public ValidateWindowsUserMiddleware(RequestDelegate next, IOptions<SecurityOptions> options, Serilog.ILogger securityLogger)
+    public ValidateWindowsUserMiddleware(
+        RequestDelegate next,
+        IOptions<SecurityOptions> options,
+        Serilog.ILogger securityLogger)
     {
         _next = next;
         _options = options.Value;
@@ -18,39 +21,57 @@ public class ValidateWindowsUserMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        var user = context.User;
+        var identity = context.User?.Identity;
 
-        if (user?.Identity == null || !user.Identity.IsAuthenticated)
+        // 🔹 1. Handshake in corso → NON bloccare
+        if (identity == null || !identity.IsAuthenticated)
         {
-            _securityLogger.Warning("ACCESSO NEGATO - Utente non autenticato. Path: {Path}, IP: {IP}",
-                context.Request.Path,
-                context.Connection.RemoteIpAddress);
-            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            await context.Response.WriteAsync("Utente non autenticato.");
+            await _next(context);
             return;
         }
 
-        var name = user.Identity.Name ?? "";
+        var userName = identity.Name ?? string.Empty;
+        var authType = identity.AuthenticationType;
 
-        if (!name.StartsWith($"{_options.RequiredDomain}\\", StringComparison.OrdinalIgnoreCase))
+        // 🔹 2. Recupero UPN (se presente)
+        var upn =
+            context.User.Claims.FirstOrDefault(c =>
+                c.Type == ClaimTypes.Upn ||
+                c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn"
+            )?.Value;
+
+        // 🔹 3. Validazione dominio
+        bool isAuthorized =
+            userName.StartsWith($"{_options.RequiredDomain}\\", StringComparison.OrdinalIgnoreCase) ||
+            (!string.IsNullOrEmpty(upn) &&
+             upn.EndsWith($"@{_options.UpnDomain}", StringComparison.OrdinalIgnoreCase));
+
+        if (!isAuthorized)
         {
-            _securityLogger.Warning("ACCESSO NEGATO - Dominio non autorizzato. Utente: {User}, AuthType: {AuthType}, Path: {Path}, IP: {IP}",
-                name,
-                user.Identity.AuthenticationType,
+            _securityLogger.Warning(
+                "ACCESSO NEGATO - Dominio non autorizzato. User: {User}, UPN: {UPN}, AuthType: {AuthType}, Path: {Path}, IP: {IP}",
+                userName,
+                upn,
+                authType,
                 context.Request.Path,
-                context.Connection.RemoteIpAddress);
+                context.Connection.RemoteIpAddress
+            );
+
             context.Response.StatusCode = StatusCodes.Status403Forbidden;
-            await context.Response.WriteAsync("Accesso negato: dominio non autorizzato.");
+            await context.Response.WriteAsync("Accesso negato.");
             return;
         }
 
-        _securityLogger.Warning("ACCESSO Consentito - Dominio autorizzato. Utente: {User}, AuthType: {AuthType}, Path: {Path}, IP: {IP}",
-                name,
-                user.Identity.AuthenticationType,
-                context.Request.Path,
-                context.Connection.RemoteIpAddress);
+        // 🔹 4. Log accesso valido (Information, non Warning)
+        _securityLogger.Information(
+            "ACCESSO CONSENTITO. User: {User}, UPN: {UPN}, AuthType: {AuthType}, Path: {Path}, IP: {IP}",
+            userName,
+            upn,
+            authType,
+            context.Request.Path,
+            context.Connection.RemoteIpAddress
+        );
 
         await _next(context);
     }
 }
-

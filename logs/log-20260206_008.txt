@@ -1,0 +1,29 @@
+2026-02-06 11:41:32.712 +01:00 [INF] User profile is available. Using 'C:\Users\PaoloLuca\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-02-06 11:41:33.800 +01:00 [INF] Now listening on: https://localhost:7250
+2026-02-06 11:41:33.806 +01:00 [INF] Now listening on: http://localhost:5297
+2026-02-06 11:41:33.972 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-06 11:41:33.975 +01:00 [INF] Hosting environment: Development
+2026-02-06 11:41:33.977 +01:00 [INF] Content root path: C:\Users\PaoloLuca\Documents\source\GitHub_TwoTeam\MeccaExcelApi
+2026-02-06 11:41:34.775 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/index.html - null null
+2026-02-06 11:41:35.184 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/index.html - 200 null text/html;charset=utf-8 420.7859ms
+2026-02-06 11:41:35.221 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_vs/browserLink - null null
+2026-02-06 11:41:35.221 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - null null
+2026-02-06 11:41:35.239 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - 200 16523 application/javascript; charset=utf-8 18.6388ms
+2026-02-06 11:41:35.276 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_vs/browserLink - 200 null text/javascript; charset=UTF-8 55.0613ms
+2026-02-06 11:41:35.299 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - null null
+2026-02-06 11:41:35.340 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 41.6183ms
+2026-02-06 11:41:47.888 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/StoredProcedures/xml/v4_ADDIN_ListaMancanteSfuso - null null
+2026-02-06 11:41:47.909 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.StoredProcedures.GetV4_ADDIN_ListaMancanteSfuso (DucatiMeccaExcelApi)'
+2026-02-06 11:41:47.966 +01:00 [INF] Route matched with {action = "GetV4_ADDIN_ListaMancanteSfuso", controller = "StoredProcedures"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetV4_ADDIN_ListaMancanteSfuso(System.String) on controller DucatiExcelApi.Controllers.StoredProcedures (DucatiMeccaExcelApi).
+2026-02-06 11:41:48.337 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, StoredProcedure=v4_ADDIN_ListaMancanteSfuso
+, Type="StoredProcedure", Params=@upn=simona.guastella@ducati.com
+2026-02-06 11:41:54.226 +01:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2026-02-06 11:41:54.242 +01:00 [INF] Executed action DucatiExcelApi.Controllers.StoredProcedures.GetV4_ADDIN_ListaMancanteSfuso (DucatiMeccaExcelApi) in 6260.3103ms
+2026-02-06 11:41:54.246 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.StoredProcedures.GetV4_ADDIN_ListaMancanteSfuso (DucatiMeccaExcelApi)'
+2026-02-06 11:41:54.249 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/StoredProcedures/xml/v4_ADDIN_ListaMancanteSfuso - 400 null text/plain; charset=utf-8 6361.187ms
+2026-02-06 11:43:48.123 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/StoredProcedures/xml/v4_ADDIN_ListaMancanteSfuso - null null
+2026-02-06 11:43:48.175 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.StoredProcedures.GetV4_ADDIN_ListaMancanteSfuso (DucatiMeccaExcelApi)'
+2026-02-06 11:43:48.179 +01:00 [INF] Route matched with {action = "GetV4_ADDIN_ListaMancanteSfuso", controller = "StoredProcedures"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetV4_ADDIN_ListaMancanteSfuso(System.String) on controller DucatiExcelApi.Controllers.StoredProcedures (DucatiMeccaExcelApi).
+2026-02-06 11:43:48.428 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, StoredProcedure=v4_ADDIN_ListaMancanteSfuso
+, Type="StoredProcedure", Params=@upn=simona.guastella@ducati.com
+2026-02-06 11:44:09.367 +01:00 [INF] Applicazione avviata correttamente

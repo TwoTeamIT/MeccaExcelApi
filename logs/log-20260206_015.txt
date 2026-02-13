@@ -1,0 +1,159 @@
+2026-02-06 12:45:33.874 +01:00 [INF] User profile is available. Using 'C:\Users\PaoloLuca\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-02-06 12:45:34.051 +01:00 [INF] Now listening on: https://localhost:7250
+2026-02-06 12:45:34.052 +01:00 [INF] Now listening on: http://localhost:5297
+2026-02-06 12:45:34.120 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-06 12:45:34.122 +01:00 [INF] Hosting environment: Development
+2026-02-06 12:45:34.123 +01:00 [INF] Content root path: C:\Users\PaoloLuca\Documents\source\GitHub_TwoTeam\MeccaExcelApi
+2026-02-06 12:45:34.946 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/index.html - null null
+2026-02-06 12:45:35.108 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/index.html - 200 null text/html;charset=utf-8 169.0168ms
+2026-02-06 12:45:35.156 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - null null
+2026-02-06 12:45:35.156 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_vs/browserLink - null null
+2026-02-06 12:45:35.163 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - 200 16523 application/javascript; charset=utf-8 7.8048ms
+2026-02-06 12:45:35.194 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_vs/browserLink - 200 null text/javascript; charset=UTF-8 37.9854ms
+2026-02-06 12:45:35.216 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - null null
+2026-02-06 12:45:35.236 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 20.1781ms
+2026-02-06 12:46:01.039 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - null null
+2026-02-06 12:46:01.055 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:46:01.101 +01:00 [INF] Route matched with {action = "GetEfn_GestioneID1", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_GestioneID1(System.String, System.String, System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-02-06 12:46:08.277 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, Function=efn_GestioneID1, Type="Function", Params=@Fileone=gp2501, @TT=98, @Intervento=SOSM, @upn=simona.guastella@ducati.com
+2026-02-06 12:46:20.914 +01:00 [INF] [efn_GestioneID1] GetXmlStream - Tempo totale: "00:00:12.9193933"
+2026-02-06 12:46:20.921 +01:00 [INF] GetExportStream completed in 12919 ms for user simona.guastella@ducati.com
+2026-02-06 12:46:20.938 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-02-06 12:46:20.998 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi) in 19887.942ms
+2026-02-06 12:46:21.002 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:46:21.006 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - 200 383297 application/xml; charset=utf-8 19966.6584ms
+2026-02-06 12:47:01.064 +01:00 [INF] Request starting HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - null null
+2026-02-06 12:47:01.082 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:47:01.090 +01:00 [INF] Route matched with {action = "GetEfn_GestioneID1", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_GestioneID1(System.String, System.String, System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-02-06 12:47:01.241 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, Function=efn_GestioneID1, Type="Function", Params=@Fileone=gp2501, @TT=98, @Intervento=SOSM, @upn=simona.guastella@ducati.com
+2026-02-06 12:47:03.912 +01:00 [INF] [efn_GestioneID1] GetXmlStream - Tempo totale: "00:00:02.8152819"
+2026-02-06 12:47:03.921 +01:00 [INF] GetExportStream completed in 2815 ms for user simona.guastella@ducati.com
+2026-02-06 12:47:03.928 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-02-06 12:47:03.965 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi) in 2868.7057ms
+2026-02-06 12:47:03.969 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:47:03.973 +01:00 [INF] Request finished HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - 200 383297 application/xml; charset=utf-8 2909.4779ms
+2026-02-06 12:47:05.988 +01:00 [INF] Request starting HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - null null
+2026-02-06 12:47:06.000 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:47:06.005 +01:00 [INF] Route matched with {action = "GetEfn_GestioneID1", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_GestioneID1(System.String, System.String, System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-02-06 12:47:06.154 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, Function=efn_GestioneID1, Type="Function", Params=@Fileone=gp2501, @TT=98, @Intervento=SOSM, @upn=simona.guastella@ducati.com
+2026-02-06 12:47:08.647 +01:00 [INF] [efn_GestioneID1] GetXmlStream - Tempo totale: "00:00:02.6341669"
+2026-02-06 12:47:08.656 +01:00 [INF] GetExportStream completed in 2634 ms for user simona.guastella@ducati.com
+2026-02-06 12:47:08.659 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-02-06 12:47:08.676 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi) in 2663.3305ms
+2026-02-06 12:47:08.682 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:47:08.687 +01:00 [INF] Request finished HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - 200 383297 application/xml; charset=utf-8 2699.7301ms
+2026-02-06 12:47:08.699 +01:00 [INF] Request starting HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - null null
+2026-02-06 12:47:08.709 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:47:08.712 +01:00 [INF] Route matched with {action = "GetEfn_GestioneID1", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_GestioneID1(System.String, System.String, System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-02-06 12:47:08.834 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, Function=efn_GestioneID1, Type="Function", Params=@Fileone=gp2501, @TT=98, @Intervento=SOSM, @upn=simona.guastella@ducati.com
+2026-02-06 12:47:11.253 +01:00 [INF] [efn_GestioneID1] GetXmlStream - Tempo totale: "00:00:02.5318341"
+2026-02-06 12:47:11.261 +01:00 [INF] GetExportStream completed in 2531 ms for user simona.guastella@ducati.com
+2026-02-06 12:47:11.262 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-02-06 12:47:11.276 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi) in 2555.0156ms
+2026-02-06 12:47:11.291 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:47:11.296 +01:00 [INF] Request finished HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - 200 383297 application/xml; charset=utf-8 2597.2565ms
+2026-02-06 12:52:49.316 +01:00 [INF] Request starting HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - null null
+2026-02-06 12:52:49.322 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:52:49.324 +01:00 [INF] Route matched with {action = "GetEfn_GestioneID1", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_GestioneID1(System.String, System.String, System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-02-06 12:52:49.517 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, Function=efn_GestioneID1, Type="Function", Params=@Fileone=gp2501, @TT=98, @Intervento=SOSM, @upn=simona.guastella@ducati.com
+2026-02-06 12:52:53.093 +01:00 [INF] Request starting HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - null null
+2026-02-06 12:52:53.102 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:52:53.105 +01:00 [INF] Route matched with {action = "GetEfn_GestioneID1", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_GestioneID1(System.String, System.String, System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-02-06 12:52:53.210 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, Function=efn_GestioneID1, Type="Function", Params=@Fileone=gp2501, @TT=98, @Intervento=SOSM, @upn=simona.guastella@ducati.com
+2026-02-06 12:52:56.115 +01:00 [INF] Request starting HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - null null
+2026-02-06 12:52:56.119 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:52:56.120 +01:00 [INF] Route matched with {action = "GetEfn_GestioneID1", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_GestioneID1(System.String, System.String, System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-02-06 12:52:56.235 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, Function=efn_GestioneID1, Type="Function", Params=@Fileone=gp2501, @TT=98, @Intervento=SOSM, @upn=simona.guastella@ducati.com
+2026-02-06 12:56:05.733 +01:00 [INF] [efn_GestioneID1] GetXmlStream - Tempo totale: "00:03:09.6090833"
+2026-02-06 12:56:05.734 +01:00 [INF] [efn_GestioneID1] GetXmlStream - Tempo totale: "00:03:12.6235064"
+2026-02-06 12:56:05.736 +01:00 [INF] GetExportStream completed in 189609 ms for user simona.guastella@ducati.com
+2026-02-06 12:56:05.742 +01:00 [INF] GetExportStream completed in 192623 ms for user simona.guastella@ducati.com
+2026-02-06 12:56:05.743 +01:00 [INF] [efn_GestioneID1] GetXmlStream - Tempo totale: "00:03:16.4148431"
+2026-02-06 12:56:05.754 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-02-06 12:56:05.746 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-02-06 12:56:05.767 +01:00 [INF] GetExportStream completed in 196414 ms for user simona.guastella@ducati.com
+2026-02-06 12:56:05.758 +01:00 [INF] Request starting HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - null null
+2026-02-06 12:56:05.762 +01:00 [INF] Request starting HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - null null
+2026-02-06 12:56:05.753 +01:00 [INF] Request starting HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - null null
+2026-02-06 12:56:05.773 +01:00 [INF] Connection id "0HNJ5EKUEDHTK", Request id "0HNJ5EKUEDHTK:00000001": the application aborted the connection.
+2026-02-06 12:56:05.773 +01:00 [INF] Connection id "0HNJ5EKUEDHTL", Request id "0HNJ5EKUEDHTL:00000001": the application aborted the connection.
+2026-02-06 12:56:05.773 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-02-06 12:56:05.776 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:56:05.791 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi) in 192680.7217ms
+2026-02-06 12:56:05.793 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi) in 189669.6905ms
+2026-02-06 12:56:05.781 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:56:05.787 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:56:05.796 +01:00 [INF] Connection id "0HNJ5EKUEDHTJ", Request id "0HNJ5EKUEDHTJ:00000001": the application aborted the connection.
+2026-02-06 12:56:05.797 +01:00 [INF] Route matched with {action = "GetEfn_GestioneID1", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_GestioneID1(System.String, System.String, System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-02-06 12:56:05.799 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:56:05.800 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:56:05.802 +01:00 [INF] Route matched with {action = "GetEfn_GestioneID1", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_GestioneID1(System.String, System.String, System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-02-06 12:56:05.803 +01:00 [INF] Route matched with {action = "GetEfn_GestioneID1", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_GestioneID1(System.String, System.String, System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-02-06 12:56:05.804 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi) in 196476.2367ms
+2026-02-06 12:56:05.808 +01:00 [INF] Request finished HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - 499 383297 application/xml; charset=utf-8 192714.226ms
+2026-02-06 12:56:05.811 +01:00 [INF] Request finished HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - 499 383297 application/xml; charset=utf-8 189695.5287ms
+2026-02-06 12:56:05.826 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:56:05.836 +01:00 [INF] Request finished HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - 499 383297 application/xml; charset=utf-8 196518.7539ms
+2026-02-06 12:56:05.985 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, Function=efn_GestioneID1, Type="Function", Params=@Fileone=gp2501, @TT=98, @Intervento=SOSM, @upn=simona.guastella@ducati.com
+2026-02-06 12:56:05.986 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, Function=efn_GestioneID1, Type="Function", Params=@Fileone=gp2501, @TT=98, @Intervento=SOSM, @upn=simona.guastella@ducati.com
+2026-02-06 12:56:05.986 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, Function=efn_GestioneID1, Type="Function", Params=@Fileone=gp2501, @TT=98, @Intervento=SOSM, @upn=simona.guastella@ducati.com
+2026-02-06 12:56:08.613 +01:00 [INF] [efn_GestioneID1] GetXmlStream - Tempo totale: "00:00:02.7908675"
+2026-02-06 12:56:08.618 +01:00 [INF] GetExportStream completed in 2790 ms for user simona.guastella@ducati.com
+2026-02-06 12:56:08.623 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-02-06 12:56:08.641 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi) in 2819.1195ms
+2026-02-06 12:56:08.642 +01:00 [INF] [efn_GestioneID1] GetXmlStream - Tempo totale: "00:00:02.8350588"
+2026-02-06 12:56:08.645 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:56:08.648 +01:00 [INF] GetExportStream completed in 2835 ms for user simona.guastella@ducati.com
+2026-02-06 12:56:08.650 +01:00 [INF] Request finished HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - 200 383297 application/xml; charset=utf-8 2897.0965ms
+2026-02-06 12:56:08.652 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-02-06 12:56:08.669 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi) in 2863.1127ms
+2026-02-06 12:56:08.669 +01:00 [INF] Request starting HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - null null
+2026-02-06 12:56:08.671 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:56:08.675 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:56:08.676 +01:00 [INF] Request finished HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - 200 383297 application/xml; charset=utf-8 2918.1528ms
+2026-02-06 12:56:08.678 +01:00 [INF] Route matched with {action = "GetEfn_GestioneID1", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_GestioneID1(System.String, System.String, System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-02-06 12:56:08.689 +01:00 [INF] Request starting HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - null null
+2026-02-06 12:56:08.694 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:56:08.696 +01:00 [INF] Route matched with {action = "GetEfn_GestioneID1", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_GestioneID1(System.String, System.String, System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-02-06 12:56:08.784 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, Function=efn_GestioneID1, Type="Function", Params=@Fileone=gp2501, @TT=98, @Intervento=SOSM, @upn=simona.guastella@ducati.com
+2026-02-06 12:56:08.800 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, Function=efn_GestioneID1, Type="Function", Params=@Fileone=gp2501, @TT=98, @Intervento=SOSM, @upn=simona.guastella@ducati.com
+2026-02-06 12:56:11.309 +01:00 [INF] [efn_GestioneID1] GetXmlStream - Tempo totale: "00:00:02.6097868"
+2026-02-06 12:56:11.314 +01:00 [INF] GetExportStream completed in 2609 ms for user simona.guastella@ducati.com
+2026-02-06 12:56:11.320 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-02-06 12:56:11.344 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi) in 2645.3131ms
+2026-02-06 12:56:11.352 +01:00 [INF] [efn_GestioneID1] GetXmlStream - Tempo totale: "00:00:02.6669372"
+2026-02-06 12:56:11.357 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:56:11.361 +01:00 [INF] GetExportStream completed in 2666 ms for user simona.guastella@ducati.com
+2026-02-06 12:56:11.363 +01:00 [INF] Request finished HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - 200 383297 application/xml; charset=utf-8 2674.1431ms
+2026-02-06 12:56:11.367 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-02-06 12:56:11.392 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi) in 2707.2476ms
+2026-02-06 12:56:11.395 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:56:11.398 +01:00 [INF] Request finished HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - 200 383297 application/xml; charset=utf-8 2728.5201ms
+2026-02-06 12:56:13.677 +01:00 [INF] [efn_GestioneID1] GetXmlStream - Tempo totale: "00:00:07.8600286"
+2026-02-06 12:56:13.686 +01:00 [INF] GetExportStream completed in 7860 ms for user simona.guastella@ducati.com
+2026-02-06 12:56:13.692 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-02-06 12:56:13.700 +01:00 [INF] Connection id "0HNJ5EKUEDHTM", Request id "0HNJ5EKUEDHTM:00000001": the application aborted the connection.
+2026-02-06 12:56:13.708 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi) in 7891.4578ms
+2026-02-06 12:56:13.712 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:56:13.714 +01:00 [INF] Request finished HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - 499 383297 application/xml; charset=utf-8 7952.5616ms
+2026-02-06 12:58:36.165 +01:00 [INF] Request starting HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - null null
+2026-02-06 12:58:36.177 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:58:36.181 +01:00 [INF] Route matched with {action = "GetEfn_GestioneID1", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_GestioneID1(System.String, System.String, System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-02-06 12:58:37.640 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, Function=efn_GestioneID1, Type="Function", Params=@Fileone=gp2501, @TT=98, @Intervento=SOSM, @upn=simona.guastella@ducati.com
+2026-02-06 12:58:41.057 +01:00 [INF] [efn_GestioneID1] GetXmlStream - Tempo totale: "00:00:04.8673233"
+2026-02-06 12:58:41.058 +01:00 [INF] GetExportStream completed in 4867 ms for user simona.guastella@ducati.com
+2026-02-06 12:58:41.061 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-02-06 12:58:41.089 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi) in 4899.7938ms
+2026-02-06 12:58:41.093 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:58:41.098 +01:00 [INF] Request finished HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - 200 383297 application/xml; charset=utf-8 4932.3055ms
+2026-02-06 12:58:41.111 +01:00 [INF] Request starting HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - null null
+2026-02-06 12:58:41.119 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:58:41.123 +01:00 [INF] Route matched with {action = "GetEfn_GestioneID1", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_GestioneID1(System.String, System.String, System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-02-06 12:58:42.841 +01:00 [INF] [#ENDPOINT#] User simona.guastella@ducati.com called GetExportStream. Mode=xml, Function=efn_GestioneID1, Type="Function", Params=@Fileone=gp2501, @TT=98, @Intervento=SOSM, @upn=simona.guastella@ducati.com
+2026-02-06 12:58:46.191 +01:00 [INF] [efn_GestioneID1] GetXmlStream - Tempo totale: "00:00:05.0625226"
+2026-02-06 12:58:46.205 +01:00 [INF] GetExportStream completed in 5062 ms for user simona.guastella@ducati.com
+2026-02-06 12:58:46.220 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-02-06 12:58:46.245 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi) in 5116.307ms
+2026-02-06 12:58:46.248 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_GestioneID1 (DucatiMeccaExcelApi)'
+2026-02-06 12:58:46.250 +01:00 [INF] Request finished HTTP/1.1 GET https://localhost:7250/Functions/xml/efn_GestioneID1?Fileone=gp2501&TT=98&Intervento=SOSM - 200 383297 application/xml; charset=utf-8 5139.5284ms
+2026-02-06 13:17:03.148 +01:00 [INF] Applicazione avviata correttamente

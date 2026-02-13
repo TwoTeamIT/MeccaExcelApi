@@ -18,6 +18,7 @@ namespace DucatiMeccaExcelApi.Engine
         private ILogger _logger;
         private string _folderPath;
         private double _cacheDurationMinutes;
+        private string suffixName = "_UPN";
 
         public DataExportEngine(string connStr, ILogger logger, IOptions<EndPointCacheConfig> options) {
             _logger = logger;
@@ -28,9 +29,9 @@ namespace DucatiMeccaExcelApi.Engine
             _dataExportService = new DataExportService(connStr);
         }
 
-        public MemoryStream GetJsonStream(string functionName, ProgramType functionType, List<SqlParameter> parameters, Stopwatch stopwatch)
+        public MemoryStream GetJsonStream(string functionName, ProgramType functionType, List<SqlParameter> parameters, string whereClause, Stopwatch stopwatch)
         {
-            var dt = _dataExportService.Execute(functionName, functionType, parameters);
+            var dt = _dataExportService.Execute(functionName + suffixName, functionType, parameters, whereClause);
 
             string json = JsonConvert.SerializeObject(dt, Newtonsoft.Json.Formatting.None);
 
@@ -43,7 +44,7 @@ namespace DucatiMeccaExcelApi.Engine
         }
 
         public string GetJsonStreamWithCache(string functionName, 
-            ProgramType functionType, List<SqlParameter> parameters,
+            ProgramType functionType, List<SqlParameter> parameters, string whereClause,
             Stopwatch stopwatch, string cacheKey,
             ConcurrentDictionary<string, Lazy<Task<string>>> generationTasks, 
             Dictionary<string, (string FilePath, DateTime Expiration)> cache)
@@ -59,7 +60,7 @@ namespace DucatiMeccaExcelApi.Engine
                 _logger.LogInformation("[{Function}] Generazione JSON Excel-friendly INIZIATA per {Key}", functionName, cacheKey);
 
                 // Query DB
-                var dt = _dataExportService.Execute(functionName, functionType, parameters);
+                var dt = _dataExportService.Execute(functionName + suffixName, functionType, parameters, whereClause);
 
                 // Converti il DataTable in una lista di dizionari piatti
                 var rows = new List<Dictionary<string, object?>>();
@@ -104,9 +105,9 @@ namespace DucatiMeccaExcelApi.Engine
             return filePath;
         }
 
-        public void GetXmlStream(string functionName, ProgramType functionType, List<SqlParameter> parameters, Stopwatch stopwatch, out MemoryStream ms, out string xmlContent)
+        public void GetXmlStream(string functionName, ProgramType functionType, List<SqlParameter> parameters, string whereClause,  Stopwatch stopwatch, out MemoryStream ms, out string xmlContent)
         {
-            var dt = _dataExportService.Execute(functionName, functionType, parameters);
+            var dt = _dataExportService.Execute(functionName + suffixName, functionType, parameters, whereClause);
             ms = new MemoryStream();
             dt.WriteXml(ms, XmlWriteMode.WriteSchema);
             
@@ -122,7 +123,7 @@ namespace DucatiMeccaExcelApi.Engine
         }
 
         public string GetXmlStreamWithCache(string functionName, 
-            ProgramType functionType, List<SqlParameter> parameters, 
+            ProgramType functionType, List<SqlParameter> parameters, string whereClause,
             Stopwatch stopwatch, string cacheKey,
             ConcurrentDictionary<string, Lazy<Task<string>>> generationTasks,
             Dictionary<string, (string FilePath, DateTime Expiration)> cache)
@@ -137,7 +138,7 @@ namespace DucatiMeccaExcelApi.Engine
                 _logger.LogInformation("[{Function}] Generazione file INIZIATA per {Key}", functionName, cacheKey);
 
                 // --- QUERY DB (una sola volta per cacheKey) ---
-                var dt = _dataExportService.Execute(functionName, functionType, parameters);
+                var dt = _dataExportService.Execute(functionName + suffixName, functionType, parameters, whereClause);
 
                 // --- CREAZIONE XML in memoria ---
                 string xmlContent;
@@ -173,7 +174,7 @@ namespace DucatiMeccaExcelApi.Engine
                 await System.IO.File.WriteAllTextAsync(tempPath, xmlContent, utf8NoBom);
 
                 // --- SALVA IN CACHE ---
-                cache[cacheKey] = (tempPath, DateTime.UtcNow.AddMinutes(10));
+                cache[cacheKey] = (tempPath, DateTime.UtcNow.AddMinutes(_cacheDurationMinutes));
 
                 _logger.LogInformation("[{Function}] Generazione COMPLETATA per {Key} (path={Path})", functionName, cacheKey, tempPath);
 

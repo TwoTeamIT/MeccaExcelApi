@@ -1,0 +1,113 @@
+2026-01-21 16:41:24.820 +01:00 [INF] User profile is available. Using 'C:\Users\PaoloLuca\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-01-21 16:41:26.004 +01:00 [INF] Now listening on: https://localhost:7250
+2026-01-21 16:41:26.008 +01:00 [INF] Now listening on: http://localhost:5297
+2026-01-21 16:41:26.094 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-01-21 16:41:26.098 +01:00 [INF] Hosting environment: Development
+2026-01-21 16:41:26.102 +01:00 [INF] Content root path: C:\Users\PaoloLuca\Documents\source\GitHub_TwoTeam\MeccaExcelApi
+2026-01-21 16:41:28.065 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/index.html - null null
+2026-01-21 16:41:28.847 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/index.html - 200 null text/html;charset=utf-8 805.2965ms
+2026-01-21 16:41:28.930 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_vs/browserLink - null null
+2026-01-21 16:41:28.930 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - null null
+2026-01-21 16:41:28.983 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - 200 16523 application/javascript; charset=utf-8 52.6006ms
+2026-01-21 16:41:29.069 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_vs/browserLink - 200 null text/javascript; charset=UTF-8 139.9785ms
+2026-01-21 16:41:29.114 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - null null
+2026-01-21 16:41:29.277 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 163.3469ms
+2026-01-21 16:42:34.483 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/Functions/xmlexcel/efn_ARTICOLI_DBEXP?Fileoni=CORSE2609 - null null
+2026-01-21 16:42:34.574 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:42:34.656 +01:00 [INF] Route matched with {action = "GetEfn_ARTICOLI_DBEXP", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_ARTICOLI_DBEXP(System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-01-21 16:42:45.100 +01:00 [INF] [#ENDPOINT#] User extern.paolo.luca@ducati.com called GetExportStream. Mode=xmlexcel, Function=efn_ARTICOLI_DBEXP, Type="Function", Params=@Fileoni=CORSE2609, @upn=extern.paolo.luca@ducati.com
+2026-01-21 16:42:45.163 +01:00 [INF] [efn_ARTICOLI_DBEXP] Generazione file INIZIATA per efn_ARTICOLI_DBEXP|extern.paolo.luca@ducati.com|@Fileoni=CORSE2609;@upn=extern.paolo.luca@ducati.com|Xml
+2026-01-21 16:42:56.030 +01:00 [INF] [efn_ARTICOLI_DBEXP] Generazione COMPLETATA per efn_ARTICOLI_DBEXP|extern.paolo.luca@ducati.com|@Fileoni=CORSE2609;@upn=extern.paolo.luca@ducati.com|Xml (path=C:\temp\efn_ARTICOLI_DBEXP_7b089a985969434c932ba19b320b8654.xml)
+2026-01-21 16:42:56.037 +01:00 [INF] [efn_ARTICOLI_DBEXP] GetXmlStreamRedirect - Tempo totale: "00:00:10.9384030"
+2026-01-21 16:42:56.047 +01:00 [INF] GetExportStream completed in 10938 ms for user extern.paolo.luca@ducati.com
+2026-01-21 16:42:56.066 +01:00 [INF] Executing PhysicalFileResult, sending file 'C:\temp\efn_ARTICOLI_DBEXP_7b089a985969434c932ba19b320b8654.xml' with download name 'efn_ARTICOLI_DBEXP_7b089a985969434c932ba19b320b8654.xml' ...
+2026-01-21 16:42:56.113 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi) in 21436.6393ms
+2026-01-21 16:42:56.118 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:42:56.122 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/Functions/xmlexcel/efn_ARTICOLI_DBEXP?Fileoni=CORSE2609 - 200 19 application/xml 21639.3964ms
+2026-01-21 16:43:44.052 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/Functions/xmlexcel/efn_ARTICOLI_DBEXP?Fileoni=GP2601 - null null
+2026-01-21 16:43:44.096 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:43:44.102 +01:00 [INF] Route matched with {action = "GetEfn_ARTICOLI_DBEXP", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_ARTICOLI_DBEXP(System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-01-21 16:43:45.794 +01:00 [INF] [#ENDPOINT#] User extern.paolo.luca@ducati.com called GetExportStream. Mode=xmlexcel, Function=efn_ARTICOLI_DBEXP, Type="Function", Params=@Fileoni=GP2601, @upn=extern.paolo.luca@ducati.com
+2026-01-21 16:43:45.800 +01:00 [INF] [efn_ARTICOLI_DBEXP] Generazione file INIZIATA per efn_ARTICOLI_DBEXP|extern.paolo.luca@ducati.com|@Fileoni=GP2601;@upn=extern.paolo.luca@ducati.com|Xml
+2026-01-21 16:44:09.304 +01:00 [INF] [efn_ARTICOLI_DBEXP] Generazione COMPLETATA per efn_ARTICOLI_DBEXP|extern.paolo.luca@ducati.com|@Fileoni=GP2601;@upn=extern.paolo.luca@ducati.com|Xml (path=C:\temp\efn_ARTICOLI_DBEXP_a43626408d2941ef9994fc4879de8108.xml)
+2026-01-21 16:44:09.311 +01:00 [INF] [efn_ARTICOLI_DBEXP] GetXmlStreamRedirect - Tempo totale: "00:00:23.5164329"
+2026-01-21 16:44:09.316 +01:00 [INF] GetExportStream completed in 23516 ms for user extern.paolo.luca@ducati.com
+2026-01-21 16:44:09.321 +01:00 [INF] Executing PhysicalFileResult, sending file 'C:\temp\efn_ARTICOLI_DBEXP_a43626408d2941ef9994fc4879de8108.xml' with download name 'efn_ARTICOLI_DBEXP_a43626408d2941ef9994fc4879de8108.xml' ...
+2026-01-21 16:44:09.657 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi) in 25550.2869ms
+2026-01-21 16:44:09.663 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:44:09.671 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/Functions/xmlexcel/efn_ARTICOLI_DBEXP?Fileoni=GP2601 - 200 2142126 application/xml 25619.2785ms
+2026-01-21 16:44:56.476 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/Functions/xmlexcel/efn_ARTICOLI_DBEXP?Fileoni=GP2601&Where=where%20parte%20%3D%20%2704111311B%27 - null null
+2026-01-21 16:44:56.506 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:44:56.512 +01:00 [INF] Route matched with {action = "GetEfn_ARTICOLI_DBEXP", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_ARTICOLI_DBEXP(System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-01-21 16:45:01.148 +01:00 [INF] [#ENDPOINT#] User extern.paolo.luca@ducati.com called GetExportStream. Mode=xmlexcel, Function=efn_ARTICOLI_DBEXP, Type="Function", Params=@Fileoni=GP2601, @upn=extern.paolo.luca@ducati.com
+2026-01-21 16:45:01.154 +01:00 [INF] [efn_ARTICOLI_DBEXP] Cache HIT (redirect) per efn_ARTICOLI_DBEXP|extern.paolo.luca@ducati.com|@Fileoni=GP2601;@upn=extern.paolo.luca@ducati.com|Xml
+2026-01-21 16:45:01.159 +01:00 [INF] GetExportStream completed in 10 ms for user extern.paolo.luca@ducati.com
+2026-01-21 16:45:01.163 +01:00 [INF] Executing PhysicalFileResult, sending file 'C:\temp\efn_ARTICOLI_DBEXP_a43626408d2941ef9994fc4879de8108.xml' with download name 'efn_ARTICOLI_DBEXP_a43626408d2941ef9994fc4879de8108.xml' ...
+2026-01-21 16:45:01.398 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi) in 4879.3942ms
+2026-01-21 16:45:01.403 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:45:01.406 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/Functions/xmlexcel/efn_ARTICOLI_DBEXP?Fileoni=GP2601&Where=where%20parte%20%3D%20%2704111311B%27 - 200 2142126 application/xml 4930.3721ms
+2026-01-21 16:45:57.104 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/Functions/xmlexcel/efn_ARTICOLI_DBEXP?Fileoni=GP2601&Where=where%20parte%20%3D%20%2704111311B%27 - null null
+2026-01-21 16:45:57.168 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:45:57.178 +01:00 [INF] Route matched with {action = "GetEfn_ARTICOLI_DBEXP", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_ARTICOLI_DBEXP(System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-01-21 16:45:58.973 +01:00 [INF] [#ENDPOINT#] User extern.paolo.luca@ducati.com called GetExportStream. Mode=xmlexcel, Function=efn_ARTICOLI_DBEXP, Type="Function", Params=@Fileoni=GP2601, @upn=extern.paolo.luca@ducati.com
+2026-01-21 16:45:59.063 +01:00 [INF] [efn_ARTICOLI_DBEXP] Cache HIT (redirect) per efn_ARTICOLI_DBEXP|extern.paolo.luca@ducati.com|@Fileoni=GP2601;@upn=extern.paolo.luca@ducati.com|Xml
+2026-01-21 16:45:59.114 +01:00 [INF] GetExportStream completed in 141 ms for user extern.paolo.luca@ducati.com
+2026-01-21 16:45:59.236 +01:00 [INF] Executing PhysicalFileResult, sending file 'C:\temp\efn_ARTICOLI_DBEXP_a43626408d2941ef9994fc4879de8108.xml' with download name 'efn_ARTICOLI_DBEXP_a43626408d2941ef9994fc4879de8108.xml' ...
+2026-01-21 16:45:59.246 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi) in 2057.9918ms
+2026-01-21 16:45:59.252 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:45:59.260 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/Functions/xmlexcel/efn_ARTICOLI_DBEXP?Fileoni=GP2601&Where=where%20parte%20%3D%20%2704111311B%27 - 304 null null 2155.7866ms
+2026-01-21 16:46:10.854 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/index.html - null null
+2026-01-21 16:46:10.932 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/swagger-ui.css - null null
+2026-01-21 16:46:10.937 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/swagger-ui-bundle.js - null null
+2026-01-21 16:46:11.012 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/swagger-ui-standalone-preset.js - null null
+2026-01-21 16:46:10.991 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/index.html - 200 null text/html;charset=utf-8 138.0403ms
+2026-01-21 16:46:11.028 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - null null
+2026-01-21 16:46:11.192 +01:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2026-01-21 16:46:11.216 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_framework/aspnetcore-browser-refresh.js - 200 16523 application/javascript; charset=utf-8 193.3315ms
+2026-01-21 16:46:11.223 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/swagger-ui.css - 200 152034 text/css 294.5632ms
+2026-01-21 16:46:11.028 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/_vs/browserLink - null null
+2026-01-21 16:46:11.192 +01:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2026-01-21 16:46:11.224 +01:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2026-01-21 16:46:11.272 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/swagger-ui-standalone-preset.js - 200 230280 text/javascript 264.0175ms
+2026-01-21 16:46:11.280 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/swagger-ui-bundle.js - 200 1456926 text/javascript 344.1572ms
+2026-01-21 16:46:11.338 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/_vs/browserLink - 200 null text/javascript; charset=UTF-8 315.2803ms
+2026-01-21 16:46:11.518 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - null null
+2026-01-21 16:46:11.531 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/swagger/favicon-32x32.png - null null
+2026-01-21 16:46:11.553 +01:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2026-01-21 16:46:11.560 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/favicon-32x32.png - 200 628 image/png 28.6236ms
+2026-01-21 16:46:11.578 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 61.4168ms
+2026-01-21 16:46:52.555 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/Functions/xml/efn_DBEXP?Where=WHERE%20PARTE%20%3D%20%2704111311B%27 - null null
+2026-01-21 16:46:52.587 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:46:52.600 +01:00 [INF] Route matched with {action = "GetEfn_DBEXP", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_DBEXP(System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-01-21 16:46:52.634 +01:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-01-21 16:46:52.698 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_DBEXP (DucatiMeccaExcelApi) in 90.5938ms
+2026-01-21 16:46:52.725 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:46:52.728 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/Functions/xml/efn_DBEXP?Where=WHERE%20PARTE%20%3D%20%2704111311B%27 - 400 null application/problem+json; charset=utf-8 175.6946ms
+2026-01-21 16:46:55.133 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/Functions/xml/efn_DBEXP?Where=WHERE%20PARTE%20%3D%20%2704111311B%27 - null null
+2026-01-21 16:46:55.146 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:46:55.151 +01:00 [INF] Route matched with {action = "GetEfn_DBEXP", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_DBEXP(System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-01-21 16:46:55.159 +01:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-01-21 16:46:55.163 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_DBEXP (DucatiMeccaExcelApi) in 5.3268ms
+2026-01-21 16:46:55.168 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:46:55.171 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/Functions/xml/efn_DBEXP?Where=WHERE%20PARTE%20%3D%20%2704111311B%27 - 400 null application/problem+json; charset=utf-8 40.2542ms
+2026-01-21 16:47:30.033 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/Functions/XML/efn_ARTICOLI_DBEXP?Where=WHERE%20PARTE%20%3D%20%2704111311B%27 - null null
+2026-01-21 16:47:30.058 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:47:30.061 +01:00 [INF] Route matched with {action = "GetEfn_ARTICOLI_DBEXP", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_ARTICOLI_DBEXP(System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-01-21 16:47:31.795 +01:00 [INF] [#ENDPOINT#] User extern.paolo.luca@ducati.com called GetExportStream. Mode=XML, Function=efn_ARTICOLI_DBEXP, Type="Function", Params=@Fileoni=, @upn=extern.paolo.luca@ducati.com
+2026-01-21 16:47:42.126 +01:00 [INF] [efn_ARTICOLI_DBEXP] GetXmlStream - Tempo totale: "00:00:10.3306355"
+2026-01-21 16:47:42.137 +01:00 [INF] GetExportStream completed in 10330 ms for user extern.paolo.luca@ducati.com
+2026-01-21 16:47:42.148 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-01-21 16:47:42.163 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi) in 12097.2028ms
+2026-01-21 16:47:42.172 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:47:42.177 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/Functions/XML/efn_ARTICOLI_DBEXP?Where=WHERE%20PARTE%20%3D%20%2704111311B%27 - 200 1984 application/xml; charset=utf-8 12145.3945ms
+2026-01-21 16:50:13.963 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7250/Functions/XML/efn_ARTICOLI_DBEXP?Fileoni=GP2601&Where=WHERE%20PARTE%20%3D%20%2704111311B%27 - null null
+2026-01-21 16:50:13.979 +01:00 [INF] Executing endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:50:13.981 +01:00 [INF] Route matched with {action = "GetEfn_ARTICOLI_DBEXP", controller = "Functions"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetEfn_ARTICOLI_DBEXP(System.String, System.String, System.String) on controller DucatiExcelApi.Controllers.Functions (DucatiMeccaExcelApi).
+2026-01-21 16:50:15.529 +01:00 [INF] [#ENDPOINT#] User extern.paolo.luca@ducati.com called GetExportStream. Mode=XML, Function=efn_ARTICOLI_DBEXP, Type="Function", Params=@Fileoni=GP2601, @upn=extern.paolo.luca@ducati.com
+2026-01-21 16:50:25.790 +01:00 [INF] [efn_ARTICOLI_DBEXP] GetXmlStream - Tempo totale: "00:00:10.2610781"
+2026-01-21 16:50:25.799 +01:00 [INF] GetExportStream completed in 10261 ms for user extern.paolo.luca@ducati.com
+2026-01-21 16:50:25.805 +01:00 [INF] Executing FileContentResult, sending file with download name 'export.xml' ...
+2026-01-21 16:50:25.818 +01:00 [INF] Executed action DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi) in 11833.0954ms
+2026-01-21 16:50:25.838 +01:00 [INF] Executed endpoint 'DucatiExcelApi.Controllers.Functions.GetEfn_ARTICOLI_DBEXP (DucatiMeccaExcelApi)'
+2026-01-21 16:50:25.851 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7250/Functions/XML/efn_ARTICOLI_DBEXP?Fileoni=GP2601&Where=WHERE%20PARTE%20%3D%20%2704111311B%27 - 200 2545 application/xml; charset=utf-8 11887.8307ms
+2026-01-21 17:27:30.279 +01:00 [INF] Applicazione avviata correttamente

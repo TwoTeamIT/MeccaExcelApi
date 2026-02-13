@@ -22,8 +22,7 @@ namespace DucatiMeccaExcelApi.Controllers
             var username = User.Identity?.Name;  // Restituirà DOMINIO\Username
 
             return Ok(new { Message = "Test endpoint is working for username " + 
-                DomainUpnManager.GetUpnFromDomain(User.Identity?.Name ?? "anonymous", _securityOptions) });
-        });
+                DomainUpnManager.GetUpnFromActiveDirectory(User.Identity?.Name ?? "anonymous", _securityOptions) });
         }
     }
 }
