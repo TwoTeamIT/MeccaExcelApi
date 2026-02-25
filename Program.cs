@@ -10,32 +10,34 @@ namespace DucatiExcelApi
         public static void Main(string[] args)
         {
             // =======================
-            // LOGGER ENDPOINT
+            // SERILOG CONFIGURATION
             // =======================
-            var endpointLogger = new LoggerConfiguration()
+            Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
-                .WriteTo.Console()
-                .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
-                .CreateLogger();
+                .Enrich.FromLogContext()
 
-            // =======================
-            // LOGGER SICUREZZA
-            // =======================
-            var securityLogger = new LoggerConfiguration()
-                .MinimumLevel.Warning()
-                .WriteTo.File("logs/access-audit-.txt", rollingInterval: RollingInterval.Day)
+                // LOG GENERALE
+                .WriteTo.Console()
+                .WriteTo.File(
+                    "logs/log-.txt",
+                    rollingInterval: RollingInterval.Day)
+
+                // LOG SICUREZZA (solo dal middleware)
+                .WriteTo.Logger(lc => lc
+                    .Filter.ByIncludingOnly(e =>
+                        e.Properties.ContainsKey("SourceContext") &&
+                        e.Properties["SourceContext"].ToString().Contains("ValidateWindowsUserMiddleware"))
+                    .WriteTo.File(
+                        "logs/access-audit-.txt",
+                        rollingInterval: RollingInterval.Day))
                 .CreateLogger();
 
             var builder = WebApplication.CreateBuilder(args);
 
             // =======================
-            // SERILOG HOST
+            // Usa Serilog come host logger
             // =======================
-            builder.Host.UseSerilog((ctx, lc) => lc
-                .MinimumLevel.Information()
-                .WriteTo.Console()
-                .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
-            );
+            builder.Host.UseSerilog();
 
             // =======================
             // CONFIGURATION BINDING
@@ -58,7 +60,7 @@ namespace DucatiExcelApi
             builder.Services.AddAuthorization();
 
             // =======================
-            // SWAGGER
+            // SWAGGER CONFIGURATION
             // =======================
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -66,17 +68,21 @@ namespace DucatiExcelApi
             var app = builder.Build();
 
             // =======================
-            // SWAGGER UI (with credentials)
+            // LEGGE SE SWAGGER È ABILITATO
             // =======================
-            //if (app.Environment.IsDevelopment())
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ducati Excel API v1");
+            var swaggerEnabled = builder.Configuration.GetValue<bool>("Swagger");
 
-                // Fondamentale per Windows Auth da browser
-                c.ConfigObject.AdditionalItems["withCredentials"] = true;
-            });
+            if (swaggerEnabled)
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ducati Excel API v1");
+
+                    // Fondamentale per Windows Auth da browser
+                    c.ConfigObject.AdditionalItems["withCredentials"] = true;
+                });
+            }
 
             // =======================
             // STATIC FILES
@@ -88,7 +94,7 @@ namespace DucatiExcelApi
             });
 
             // =======================
-            // AUTH PIPELINE (ORDINE CRITICO)
+            // AUTH PIPELINE (ordine critico)
             // =======================
             app.UseAuthentication();
             app.UseAuthorization();
@@ -96,7 +102,7 @@ namespace DucatiExcelApi
             // =======================
             // MIDDLEWARE CUSTOM
             // =======================
-            app.UseMiddleware<ValidateWindowsUserMiddleware>(securityLogger);
+            app.UseMiddleware<ValidateWindowsUserMiddleware>();
 
             // =======================
             // ROUTING
@@ -105,17 +111,17 @@ namespace DucatiExcelApi
 
             try
             {
-                endpointLogger.Information("Applicazione avviata correttamente");
+                var logger = app.Services.GetRequiredService<ILogger<Program>>();
+                logger.LogInformation("Applicazione avviata correttamente");
                 app.Run();
             }
             catch (Exception ex)
             {
-                endpointLogger.Fatal(ex, "Errore fatale all'avvio dell'applicazione");
+                Log.Fatal(ex, "Errore fatale all'avvio dell'applicazione");
             }
             finally
             {
-                endpointLogger.Dispose();
-                securityLogger.Dispose();
+                Log.CloseAndFlush();
             }
         }
     }
