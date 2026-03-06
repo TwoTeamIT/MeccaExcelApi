@@ -18,16 +18,16 @@ namespace DucatiMeccaExcelApi.Utility
 
         public static string GetUpnFromActiveDirectory(string samAccountName, SecurityOptions _options)
         {
-            //using var ctx = new PrincipalContext(
-            //                 ContextType.Domain,
-            //                 _options.DomainLink);
+            // Gestisce sia "DOMINIO\utente" che "utente" semplice
+            var parts = samAccountName.Split('\\');
+            var accountName = parts.Length > 1 ? parts[1] : parts[0];
 
-            //var user = UserPrincipal.FindByIdentity(ctx, samAccountName.Split('\\')[1]);
+            if (string.IsNullOrWhiteSpace(accountName))
+                return "Anonymous";
 
-            //string upn = user?.UserPrincipalName;
-            string upn = "simona.guastella@ducati.com"; // Placeholder for testing without AD access
-
-            return upn ?? "Anonymous";
+            using var ctx = new PrincipalContext(ContextType.Domain, _options.DomainLink);
+            var user = UserPrincipal.FindByIdentity(ctx, accountName);
+            return user?.UserPrincipalName ?? "Anonymous";
         }
     }
 }

@@ -208,6 +208,17 @@ namespace DucatiExcelApi.Controllers
             return GetExportStream(mode, "efn_GestioneID", ProgramType.Function, parameters, Where);
         }
 
+        [HttpGet("{mode}/efn_FOGLIO_MONTAGGIO_NOROW")]
+        public IActionResult Getfn_FOGLIO_MONTAGGIO_NOROW([FromRoute] string mode, [FromQuery][Required] int Ultimo, [FromQuery] string Where = "")
+        {
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Ultimo", Ultimo)
+            };
+
+            return GetExportStream(mode, "efn_FOGLIO_MONTAGGIO_NOROW", ProgramType.Function, parameters, Where);
+        }
+
         [HttpGet("{mode}/efn_GestioneID1")]
         public IActionResult GetEfn_GestioneID1([FromRoute] string mode, [FromQuery][Required] string Fileone, [FromQuery][Required] string TT, 
             [FromQuery][Required] string Intervento, [FromQuery] string Where = "")
